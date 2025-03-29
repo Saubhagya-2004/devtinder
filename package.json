@@ -1,0 +1,19 @@
+{
+  "name": "divtinderback",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+   "start":"node ./src/app.js",
+   "dev":"nodemon ./src/app.js"
+  },
+  "keywords": [
+    "Nodejs",
+    "javascript"
+  ],
+  "author": "Saubhagya baliarsingh",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
