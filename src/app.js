@@ -1,33 +1,35 @@
-const express = require('express'); //express acess express module/package
-const app =express(); //app acessing express function 
-//create request
-//this will only handle get call to /user
-app.get('/user',(req,res)=>{
-    res.send({firstName :"Saubhagya",LastName:"Baliarsingh"});
+const express = require('express'); // Import express module
+const connectDB = require('./config/database');
+const app = express(); // Create an express application
+//first connect to the database then listen to the server
+const User = require('./models/user')
+app.post('/signup',async(req,res)=>{
+    //return a promise so use async
+    //creating a new instance of usermodel
+    const user = new User({
+        firstName:'chiku',
+        lastName:'singh',
+        email:'chiku@gmail.com',
+        password:'chiku123'
+
+    })
+    //always wrap it inside try catch
+    try{
+
+        await user.save();
+        res.send('user added sucessfully')
+    }
+    catch(err){
+        res.status(400).send('Error saving the message',+err.message)
+    }
 })
-//dynamic Route
-
-// app.get('/user/:userId/:user/:password',(req,res)=>{
-//     console.log(req.params);
-//     res.send({firstName :"Saubhagya",LastName:"Baliarsingh"});
-// })
-
-//get- get the data
-//post-post/save the data so..
-app.post('/user',(req,res)=>{
-    res.send("Data sucessfully inserted");
+connectDB()
+.then(()=>{
+    console.log('Database connection sucessfully...');
+    app.listen(8888, () => {
+        console.log('Server connected successfully on port 8888');
+    });
 })
-
-app.delete('/user',(req,res)=>{
-    res.send("Data sucessfully deleted");
-})
-
-//this will match all HTTp method Api calls to /hello but...
-app.use('/hello',(req,res)=>{
-    res.send('Hello world ')
-});
-
-app.listen(8888,()=>{
-    console.log('Server connected sucessfully');
-    
+.catch((err)=>{
+    console.error('database cannot be connected')
 })
