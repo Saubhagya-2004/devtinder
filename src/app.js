@@ -7,10 +7,10 @@ app.post('/signup',async(req,res)=>{
     //return a promise so use async
     //creating a new instance of usermodel
     const user = new User({
-        firstName:'chiku',
+        firstName:'Dhoni',
         lastName:'singh',
-        email:'chiku@gmail.com',
-        password:'chiku123'
+        email:'ms@gmail.com',
+        password:'ms7'
 
     })
     //always wrap it inside try catch
