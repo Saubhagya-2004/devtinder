@@ -5,6 +5,9 @@ const app = express(); // Create an express application
 const User = require('./models/user')
 //use express middle-ware
 app.use(express.json())
+app.get('/user',(req,res)=>{
+    res.send({firstName:'Saubhagya',LastName:'Baliarsingh'})
+})
 app.post('/signup',async(req,res)=>{
     //return a promise so use async
     //creating a new instance of usermodel dynamic
@@ -19,6 +22,15 @@ app.post('/signup',async(req,res)=>{
     }
     catch(err){
         res.status(400).send('Error saving the message',+err.message)
+    }
+})
+app.delete('/user',async(req,res)=>{
+   
+    try{
+        res.send('user deleted sucessfully')
+    }
+    catch{
+        res.status(400).send('Error deleting the message')
     }
 })
 connectDB()
