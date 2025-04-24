@@ -9,9 +9,10 @@ app.use(express.json());
 //authentication
 const { admin, userAuth } = require("./middlewares/auth");
 
+//admin authentication
 app.use("/admin", admin,(req,res)=>{
     res.send("Admin route accessed successfully");
-}); //use admin middleware for all routes starting with /admin
+}); 
 
 //user authentication
 app.get("/user", userAuth, (req, res) => {
