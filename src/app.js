@@ -3,6 +3,7 @@ const connectDB = require("./config/database");
 const app = express(); // Create an express application
 //first connect to the database then listen to the server
 const User = require("./models/user");
+
 //use express middle-ware
 app.use(express.json());
 //authentication
