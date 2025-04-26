@@ -10,9 +10,9 @@ app.use(express.json());
 const { admin, userAuth } = require("./middlewares/auth");
 
 //admin authentication
-app.use("/admin", admin,(req,res)=>{
-    res.send("Admin route accessed successfully");
-}); 
+app.use("/admin", admin, (req, res) => {
+  res.send("Admin route accessed successfully");
+});
 
 //user authentication
 app.get("/user", userAuth, (req, res) => {
@@ -23,13 +23,13 @@ app.post("/signup", async (req, res) => {
   //creating a new instance of usermodel dynamic
   const user = new User(req.body);
   console.log(user);
-
-  //always wrap it inside try catch
-  try {
+  
+  try{
     await user.save();
-    res.send("user added sucessfully");
-  } catch (err) {
-    res.status(400).send("Error saving the message", +err.message);
+  res.send('user added sucessfully');
+  }
+  catch(err){
+    res.status(400).send('Failed creating the user');
   }
 });
 app.delete("/user", async (req, res) => {
