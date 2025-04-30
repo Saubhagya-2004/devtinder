@@ -49,5 +49,8 @@ const UserScema = new mongoose.Schema({
   skills: {
     type: [String],
   },
+},
+{
+  timestamps:true
 });
 module.exports = mongoose.model("user", UserScema);
