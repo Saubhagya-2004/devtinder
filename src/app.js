@@ -28,7 +28,7 @@ try{
   res.send('user added successfully');
 }
 catch(err){
-  res.status(400).send('Error adding the user');
+  res.status(400).send(err+'Error adding the user');
 }
 });
 
@@ -80,10 +80,10 @@ app.delete("/userdel", async (req, res) => {
       return res.status(404).send("User not found");
     }
    
-    res.send('User deleted successfully');
+    res.send('User deleted successfully'+ user);
   } catch (err) {
     console.error(err);
-    res.status(400).send("Error deleting the user");
+    res.status(400).send("Error deleting the user"+ err);
   }
 });
 
@@ -92,7 +92,9 @@ app.patch('/update',async(req,res)=>{
   const userId = req.body._id;
   const updatedata = req.body;
   try{
-    const user = await User.findByIdAndUpdate(userId,updatedata)
+    const user = await User.findByIdAndUpdate(userId,updatedata,{
+      runValidators:true //run the validators again
+    })
     console.log(user);
     
     res.send('user updated sucessfully')
