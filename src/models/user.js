@@ -55,6 +55,11 @@ const UserScema = new mongoose.Schema(
       type: String,
       default:
         "https://th.bing.com/th/id/OIP.ZxmzSm13YnTZUqaOpae0JwAAAA?w=172&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        validate(value){
+          if(!validator.isURL(value)){
+            throw new Error('Invalid URL'+value)
+          }
+        }
     },
     Bio: {
       type: String,
