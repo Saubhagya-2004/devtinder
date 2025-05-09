@@ -9,6 +9,7 @@ const UserScema = new mongoose.Schema(
     },
     lastName: {
       type: String,
+      required:true,
       maxLength:25
     },
     email: {
@@ -16,11 +17,16 @@ const UserScema = new mongoose.Schema(
       required: true,
       unique: true,
       // mongoose will convert the email to lowercase before saving it to the database
-      lowercase: true,
+      // lowercase: true,
       //reduce space
       trim: true,
       validate(value){
         if(!validator.isEmail(value)){
+          throw new Error('Invalid email'+value);
+        }
+      },
+      validate(value){
+        if(!validator.isLowercase(value)){
           throw new Error('Invalid email'+value);
         }
       }

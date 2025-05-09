@@ -3,13 +3,15 @@ const connectDB = require("./config/database");
 const app = express(); // Create an express application
 //first connect to the database then listen to the server
 const User = require("./models/user");
-
+//validation
+const { validation } = require("./utils/validation");
 //use express middle-ware
 app.use(express.json());
 //authentication
 const { admin, userAuth } = require("./middlewares/auth");
 const user = require("./models/user");
-
+//encrypt password
+const bcrypt = require("bcrypt");
 //admin authentication
 app.use("/admin", admin, (req, res) => {
   res.send("Admin route accessed successfully");
@@ -22,28 +24,17 @@ app.get("/user", userAuth, (req, res) => {
 
 //add data into database
 app.post("/signup", async (req, res) => {
-  const user = new User(req.body);
-  console.log(req.body);
+  // console.log(req.body);
   try {
-    const allowed = [
-      "profile",
-      "age",
-      "skills",
-      "firstName",
-      "lastName",
-      "email",
-      "password",
-      "profession",
-      "gender",
-      "Bio",
-      "language",
-    ];
-    const isAllowed = Object.keys(req.body).every((key) => {
-      return allowed.includes(key);
-    });
-    if (!isAllowed) {
-      throw new Error("Invalid request");
-    }
+    //validation
+    validation(req);
+    const { password } = req.body;
+    //Encrypt the password
+    const passwordhash = await bcrypt.hash(password, 10);
+    req.body.password = passwordhash;
+    console.log(passwordhash);
+    //user input
+    const user = new User(req.body);
     await user.save();
     res.send("user added successfully");
   } catch (err) {
@@ -119,9 +110,12 @@ app.patch("/update/:userId", async (req, res) => {
       "Bio",
       "language",
       "profession",
-      'email'
+      "email",
+      "password"
     ];
-
+    const {password} =req.body;
+    const passwordhash = await bcrypt.hash(password,10);
+    req.body.password= passwordhash;
     const isAllowed = Object.keys(updatedata).every((key) => {
       return allowed.includes(key);
     });
