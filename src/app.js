@@ -32,13 +32,12 @@ app.post("/signup", async (req, res) => {
     //Encrypt the password
     const passwordhash = await bcrypt.hash(password, 10);
     req.body.password = passwordhash;
-    console.log(passwordhash);
     //user input
     const user = new User(req.body);
     await user.save();
     res.send("user added successfully");
   } catch (err) {
-    res.status(400).send("Error adding the user" + err);
+    res.status(400).send("Error adding the user" + err.message);
   }
 });
 
@@ -110,12 +109,12 @@ app.patch("/update/:userId", async (req, res) => {
       "Bio",
       "language",
       "profession",
-      "email",
-      "password"
+      "password",
     ];
-    const {password} =req.body;
-    const passwordhash = await bcrypt.hash(password,10);
-    req.body.password= passwordhash;
+    const { password } = req.body;
+    //password hash
+    // const passwordhash = await bcrypt.hash(password,10);
+    // req.body.password= passwordhash;
     const isAllowed = Object.keys(updatedata).every((key) => {
       return allowed.includes(key);
     });
@@ -132,11 +131,16 @@ app.patch("/update/:userId", async (req, res) => {
     res.status(400).send("Error updating the user" + err);
   }
 });
+
+//duplicate
 // app.patch('/change/:username',async(req,res)=>{
 //   const username = req.params?.username;
 //   const updatedata = req.body;
 //   try{
-//     const allowed = ['profession','firstName','lastName','age','language','skills','gender','profile'];
+//     const allowed = ['profession','firstName','lastName','age','language','skills','gender','profile','password'];
+//     const {password} = req.body
+//     const passwordhash= await bcrypt.hash(password,10);
+//     req.body.password=passwordhash
 //     const isallow = Object.keys(updatedata).every((key)=>{
 //       return allowed.includes(key);
 //     })
@@ -152,6 +156,32 @@ app.patch("/update/:userId", async (req, res) => {
 //     res.status(400).send('error updating: '+err.message);
 //   }
 // })
+
+//login user
+app.post("/login", async (req, res) => {
+  try {
+    const allowed = ["email", "password"];
+    const isallow = Object.keys(req.body).every((key) => {
+      return allowed.includes(key);
+    });
+    if (!isallow) {
+      throw new Error("Invalid Request");
+    }
+    const { email, password } = req.body;
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      throw new Error("invalid credentials");
+    }
+    const ispasswordvalid = await bcrypt.compare(password, user.password);
+    if (ispasswordvalid) {
+      res.send("login sucessfully");
+    } else {
+      throw new Error("invalid credentials ");
+    }
+  } catch (err) {
+    res.status(400).send("Error " + err);
+  }
+});
 
 connectDB()
   .then(() => {

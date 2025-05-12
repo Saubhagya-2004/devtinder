@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const validator = require('validator');
+const validator = require("validator");
 const UserScema = new mongoose.Schema(
   {
     firstName: {
@@ -9,8 +9,8 @@ const UserScema = new mongoose.Schema(
     },
     lastName: {
       type: String,
-      required:true,
-      maxLength:25
+      required: true,
+      maxLength: 25,
     },
     email: {
       type: String,
@@ -20,25 +20,23 @@ const UserScema = new mongoose.Schema(
       // lowercase: true,
       //reduce space
       trim: true,
-      validate(value){
-        if(!validator.isEmail(value)){
-          throw new Error('Invalid email'+value);
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Invalid email " + value);
+        }
+        if (!validator.isLowercase(value)) {
+          throw new Error("Email must be lowercase");
         }
       },
-      validate(value){
-        if(!validator.isLowercase(value)){
-          throw new Error('Invalid email'+value);
-        }
-      }
     },
     password: {
       type: String,
       required: true,
-      validate(value){
-        if(!validator.isStrongPassword(value)){
-          throw new Error('Not a strong password'+value);
+      validate(value) {
+        if (!validator.isStrongPassword(value)) {
+          throw new Error("Not a strong password" + value);
         }
-      }
+      },
     },
     gender: {
       required: true,
@@ -52,7 +50,7 @@ const UserScema = new mongoose.Schema(
     age: {
       type: Number,
       min: 18,
-      max:100
+      max: 100,
     },
     profession: {
       type: String,
@@ -61,11 +59,11 @@ const UserScema = new mongoose.Schema(
       type: String,
       default:
         "https://th.bing.com/th/id/OIP.ZxmzSm13YnTZUqaOpae0JwAAAA?w=172&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-        validate(value){
-          if(!validator.isURL(value)){
-            throw new Error('Invalid URL'+value)
-          }
+      validate(value) {
+        if (!validator.isURL(value)) {
+          throw new Error("Invalid URL" + value);
         }
+      },
     },
     Bio: {
       type: String,
