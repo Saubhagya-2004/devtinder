@@ -113,8 +113,11 @@ app.patch("/update/:userId", async (req, res) => {
     ];
     const { password } = req.body;
     //password hash
-    // const passwordhash = await bcrypt.hash(password,10);
-    // req.body.password= passwordhash;
+    if(updatedata.password){
+      const passwordhash = await bcrypt.hash(password,10);
+      updatedata.password = passwordhash;
+    }
+    
     const isAllowed = Object.keys(updatedata).every((key) => {
       return allowed.includes(key);
     });
@@ -165,23 +168,24 @@ app.post("/login", async (req, res) => {
       return allowed.includes(key);
     });
     if (!isallow) {
-      throw new Error("Invalid Request");
+      throw new Error("Invalid Request 22");
     }
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
     if (!user) {
-      throw new Error("invalid credentials");
+      throw new Error("invalid credentials 33");
     }
     const ispasswordvalid = await bcrypt.compare(password, user.password);
     if (ispasswordvalid) {
       res.send("login sucessfully");
     } else {
-      throw new Error("invalid credentials ");
+      throw new Error("invalid credentials 44");
     }
   } catch (err) {
     res.status(400).send("Error " + err);
   }
 });
+ 
 
 connectDB()
   .then(() => {

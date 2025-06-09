@@ -79,6 +79,11 @@ const UserScema = new mongoose.Schema(
     },
     language: {
       type: [String],
+      validator(value){
+        if(value.length>4){
+          throw new Error("language not be more than 4");
+        }
+      }
     },
   },
   {
