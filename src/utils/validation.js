@@ -21,6 +21,36 @@ const validation = (req) => {
   }
 
 };
+const validateprofileEdit = (req)=>{
+  const allowed =[
+    "profile",
+    "age",
+    "skills",
+    "firstName",
+    "LastName",
+    "gender",
+    "Bio",
+    "Language",
+    "profession"
+  ];
+  const isallowed = Object.keys(req.body).every((key)=>{
+    return allowed.includes(key);
+  });
+  if(!isallowed){
+    throw new Error("Invalid request");
+  } 
+}
+const validatepasswordEdit = (req) => {
+  const allowed = ["password"];
+  const isallowed = Object.keys(req.body).every((key) => {
+    return allowed.includes(key);
+  });
+  if (!isallowed) {
+    throw new Error("Invalid request");
+  }
+}
 module.exports = {
   validation,
+  validateprofileEdit,
+  validatepasswordEdit
 };

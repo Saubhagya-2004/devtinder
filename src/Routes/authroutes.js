@@ -2,7 +2,7 @@ const express = require("express");
 const authRouter = express.Router();
 const { validation } = require("../utils/validation");
 const bcrypt = require("bcrypt");
-const { UserAuth } = require("../middlewares/auth");
+const { UserAuth, userAuth } = require("../middlewares/auth");
 const User = require("../models/user");
 //authentication middleware
 authRouter.use("/signup", async (req, res) => {
@@ -58,4 +58,14 @@ authRouter.post("/login", async (req, res) => {
     res.status(400).send("Error " + err);
   }
 });
+
+//logout router
+authRouter.post('/logout',userAuth,async(req,res)=>{
+  res.cookie('token',null,{
+    expires: new Date(Date.now())
+   
+  });
+  const user = req.user;
+  res.send(user.firstName+ " logout successfully");
+})
 module.exports = authRouter;

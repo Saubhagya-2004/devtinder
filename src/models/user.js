@@ -70,10 +70,13 @@ const UserScema = new mongoose.Schema(
     },
     Bio: {
       type: String,
+      maxLength: 100,
+      trim: true,
       default: "I am good....",
     },
     skills: {
       type: [String],
+      trim: true,
       validate(value) {
         if (value.length > 5) {
           throw new Error("skills not be more than 5");
@@ -82,32 +85,36 @@ const UserScema = new mongoose.Schema(
     },
     language: {
       type: [String],
-      validator(value){
-        if(value.length>4){
+      validator(value) {
+        if (value.length > 4) {
           throw new Error("language not be more than 4");
         }
-      }
+      },
     },
   },
   {
     timestamps: true,
   }
 );
-UserScema.methods.getjwt= async function(){
+UserScema.methods.getjwt = async function () {
   const userAuth = this;
   //this represent instance usermodel
-  const token = await jwt.sign({_id:userAuth._id},'Dev@$Tinder2004*',{expiresIn:'27d'});
+  const token = await jwt.sign({ _id: userAuth._id }, "Dev@$Tinder2004*", {
+    expiresIn: "27d",
+  });
   return token;
-
-}
+};
 
 //password validate scema
 UserScema.methods.validatepassword = async function (passwordinputByuser) {
   const user = this;
   const passwordhash = user.password;
   //password hash here saved in db hashing password
-  const ispasswordvalid = await bcrypt.compare(passwordinputByuser,passwordhash);
+  const ispasswordvalid = await bcrypt.compare(
+    passwordinputByuser,
+    passwordhash
+  );
   return ispasswordvalid;
-}
+};
 
 module.exports = mongoose.model("user", UserScema);
