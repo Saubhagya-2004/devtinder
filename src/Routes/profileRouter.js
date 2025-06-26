@@ -1,13 +1,12 @@
 const express = require("express");
 const profilereq = express.Router();
 const { userAuth } = require("../middlewares/auth");
-const { validateprofileEdit, validatepasswordEdit,validation } = require("../utils/validation");
+const { validateprofileEdit, validatepasswordEdit} = require("../utils/validation");
 const bcrypt = require("bcrypt");
 //get profile
 profilereq.get("/profile", userAuth, async (req, res) => {
   try {
     //get user from userAuth middleware
-    validation(req);
     const user = req.user;
     const cookies = req.token;
     console.log(cookies);

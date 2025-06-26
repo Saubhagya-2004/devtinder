@@ -11,11 +11,13 @@ const UserScema = new mongoose.Schema({
     status:{
         type:String,
         enum:{
-            values:['pending','accept','intrest','reject'],
+            values:['pending','accept','interest','reject','ignored'],
             message:'{VALUE} is not a valid status'
         },
         default:'pending'
         }
     }
 
-)
+);
+const Connectionrequest = mongoose.model('Connectionreq',UserScema);
+module.exports = Connectionrequest
