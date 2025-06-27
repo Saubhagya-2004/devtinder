@@ -3,6 +3,7 @@ const { userAuth } = require("../middlewares/auth");
 const Connectionreq = require("../models/connectionreq");
 const connectionreq = express.Router();
 const User = require("../models/user");
+const { connection } = require("mongoose");
 
 connectionreq.post(
   "/request/send/:status/:ReciverId",
@@ -16,13 +17,27 @@ connectionreq.post(
       if (!allowed.includes(status)) {
         res.status(400).json({
           message: "Invalid status type" + status,
-        });
+        }); 
       }
       const reciver = await User.findById(ReciverId);
       if (!reciver) {
         return res.status(404).json({
           message: "Reciver not found",
         });
+      }
+      //if there is existing connection request between sender and reciver
+      const existingRequest = await Connectionreq.findOne({
+        $or:[
+          //if already exist
+          {senderId,ReciverId},
+          //if already sender sent req
+          {senderId:ReciverId,ReciverId:senderId}
+        ],
+      })
+      if(existingRequest){
+       return res.status(400).json({
+          message:"connection Request already exist"
+        })
       }
       const Connectionrequest = new Connectionreq({
         senderId,
