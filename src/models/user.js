@@ -104,7 +104,9 @@ UserScema.methods.getjwt = async function () {
   });
   return token;
 };
-
+//compound index  it will help find query in db
+//putting index 
+UserScema.index({email:1,firstName:1,lastName:1});
 //password validate scema
 UserScema.methods.validatepassword = async function (passwordinputByuser) {
   const user = this;

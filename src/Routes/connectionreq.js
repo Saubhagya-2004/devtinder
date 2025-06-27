@@ -32,7 +32,7 @@ connectionreq.post(
           {senderId,ReciverId},
           //if already sender sent req
           {senderId:ReciverId,ReciverId:senderId}
-        ],
+        ], 
       })
       if(existingRequest){
        return res.status(400).json({
@@ -46,7 +46,7 @@ connectionreq.post(
       });
       const data = await Connectionrequest.save();
       res.json({
-        message: `Connection request sent successfully to ${reciver.firstName} `,
+        message: `${req.user.firstName} Connection request sent successfully to ${reciver.firstName} ` + status,
         data,
       });
     } catch (err) {
