@@ -76,16 +76,17 @@ connectionreq.post(
         ReciverId: LoggedinUser._id,
         status: "interest", // Only allow review if the status is 'interest'
       });
-      console.log(LoggedinUser._id);
-  
 
       if (!connectionRequest) {
-        return res.status(400).json({message:"connection request not found"});
+        return res
+          .status(400)
+          .json({ message: "connection request not found" });
       }
       connectionRequest.status = status;
       const data = await connectionRequest.save();
       res.json({
-        message: `${LoggedinUser.firstName} ` + status + " is Your Connection Request",
+        message:
+          `${LoggedinUser.firstName} ` + status + " is Your Connection Request",
         data,
       });
     } catch (err) {
