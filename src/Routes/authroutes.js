@@ -46,10 +46,20 @@ authRouter.post("/login", async (req, res) => {
       // res.cookie("token",token,{
       //   expires: new Date(Date.now() + 8 * 3600000)
       // });
+
+      //duplicate login in same userid create new token
+      const expiretoken = new Date(Date.now()+ 8 * 3600000);
+      await User.findByIdAndUpdate(user._id,{
+        activeToken:token,
+        expiretoken:expiretoken
+      })
       res.cookie("token", token,{
         httpOnly:true,
         secure:true,
+         expires: expiretoken
       });
+      
+      
       res.send("login sucessfully");
     } else {
       throw new Error("invalid credentials ");

@@ -12,7 +12,7 @@ const UserScema = new mongoose.Schema(
     status: {
       type: String,
       enum: {
-        values: ["pending", "accept", "interest", "reject", "ignored"],
+        values: ["pending", "accepted", "interest", "rejected", "ignored"],
         message: "{VALUE} is not a valid status",
       },
       default: "pending",

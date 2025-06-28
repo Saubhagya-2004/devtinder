@@ -157,7 +157,7 @@ connectDB()
     app.listen(8888, () => {
       console.log("Server connected successfully on port 8888");
     });
-  })
+  }) 
   .catch((err) => {
     console.error("database cannot be connected");
   });
