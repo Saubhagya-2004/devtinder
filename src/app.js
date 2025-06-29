@@ -20,6 +20,8 @@ const bcrypt = require("bcrypt");
 const authRouter = require('./Routes/authroutes');
 const profileRouter = require('./Routes/profileRouter');
 const connectionreq = require('./Routes/connectionreq');
+
+const UserRequest = require('./Routes/UserRequest');
 //add data into database
 // app.post("/signup", async (req, res) => {
 //   // console.log(req.body);
@@ -150,7 +152,8 @@ const connectionreq = require('./Routes/connectionreq');
 
 app.use('/', authRouter);
 app.use('/',profileRouter);
-app.use('/',connectionreq)
+app.use('/',connectionreq);
+app.use('/',UserRequest);
 app.get('/',(req,res)=>{
   res.send("Welcome to the home page");
 })
