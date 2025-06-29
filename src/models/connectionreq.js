@@ -8,6 +8,7 @@ const UserScema = new mongoose.Schema(
     },
     ReciverId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref:"user",
       required: true,
     },
     status: {
