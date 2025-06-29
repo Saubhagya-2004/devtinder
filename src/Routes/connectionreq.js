@@ -86,7 +86,7 @@ connectionreq.post(
       const data = await connectionRequest.save();
       res.json({
         message:
-          `${LoggedinUser.firstName} ` + status + " is Your Connection Request",
+          `${LoggedinUser.firstName} ` + status + "  Connection Request",
         data,
       });
     } catch (err) {
