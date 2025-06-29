@@ -151,6 +151,9 @@ const connectionreq = require('./Routes/connectionreq');
 app.use('/', authRouter);
 app.use('/',profileRouter);
 app.use('/',connectionreq)
+app.get('/',(req,res)=>{
+  res.send("Welcome to the home page");
+})
 connectDB()
   .then(() => {
     console.log("Database connection sucessfully...");
