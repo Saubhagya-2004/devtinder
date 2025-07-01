@@ -9,7 +9,7 @@ profilereq.get("/profile", userAuth, async (req, res) => {
     //get user from userAuth middleware
     const user = req.user;
     const cookies = req.token;
-    console.log(cookies);
+    // console.log(cookies);
     res.send(user);
   } catch (err) {
     res.status(400).send("Error finding the user: " + err.message);
@@ -20,12 +20,14 @@ profilereq.patch("/profile/edit", userAuth, async (req, res) => {
   try {
     validateprofileEdit(req);
     const LoggedinUser = req.user;
-    console.log(LoggedinUser);
+    //before
+    // console.log(LoggedinUser);
 
     Object.keys(req.body).forEach((key) => {
       LoggedinUser[key] = req.body[key];
     });
-    console.log(LoggedinUser);
+    //after
+    // console.log(LoggedinUser);
     await LoggedinUser.save();
     res.json({
       message: `${LoggedinUser.firstName}, profile Updated sucessfully`,
