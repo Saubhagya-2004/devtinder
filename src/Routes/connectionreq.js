@@ -13,7 +13,7 @@ connectionreq.post(
       const senderId = req.user._id;
       const ReciverId = req.params.ReciverId;
       const status = req.params.status;
-      const allowed = ["ignored", "interest"];
+      const allowed = ["ignored", "interested"];
       if (!allowed.includes(status)) {
         return res.status(400).json({
           message: "Invalid status type " + status,

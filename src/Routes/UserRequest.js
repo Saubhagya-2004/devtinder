@@ -68,6 +68,13 @@ UserRequest.get("/user/connections", userAuth, async (req, res) => {
 UserRequest.get("/feed", userAuth, async (req, res) => {
   try {
     const LoggedinUser = req.user;
+
+    //give page limit
+    const page = parseInt(req.query.page)|| 1;
+    let limit = parseInt(req.query.limit)||10;
+    limit =limit>50?50:limit;
+    const skip = (page-1)*limit;
+    
     const connectionreq = await Connectionreq.find({
       $or: [{ senderId: LoggedinUser._id }, { ReciverId: LoggedinUser._id }],
     }).select("senderId ReciverId");
@@ -86,11 +93,13 @@ UserRequest.get("/feed", userAuth, async (req, res) => {
         { _id: { $nin: Array.from(hiddenuserId) } },
         //and not send loggedin user profile
         { _id: { $ne: LoggedinUser._id } },
+        // {profession:{$eq:LoggedinUser.profession}}, //filter by profession
+        {age:{$gte:LoggedinUser.age-5,$lte:LoggedinUser.age+5}}, //filter by age
       ],
-    }).select("firstName lastName age gender Bio skills language profile");
+    }).select("firstName lastName age gender Bio skills profession profile").skip(skip).limit(limit);
     // console.log(user + "not send req");
 
-    res.send(user);
+    res.json({data:user});
   } catch (err) {
     res.status(400).json({
       message: "ERROR" + err.message,
