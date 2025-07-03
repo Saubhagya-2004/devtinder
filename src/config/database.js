@@ -4,4 +4,4 @@ const connectDB = async () => {
       "mongodb+srv://saubhagyabaliarsingh2:nEswultUsQF3gDKY@nodedb.yab3goi.mongodb.net/devTinder"
    );
 };
-module.exports =  connectDB ;
+module.exports = connectDB ;
