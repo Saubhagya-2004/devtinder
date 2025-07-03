@@ -22,6 +22,9 @@ const profileRouter = require('./Routes/profileRouter');
 const connectionreq = require('./Routes/connectionreq');
 
 const UserRequest = require('./Routes/UserRequest');
+//use cors
+const cors= require("cors")
+app.use(cors())
 //add data into database
 // app.post("/signup", async (req, res) => {
 //   // console.log(req.body);
