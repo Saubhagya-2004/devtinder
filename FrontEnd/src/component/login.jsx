@@ -1,11 +1,23 @@
 import React, { useState } from "react";
-
+import axios from 'axios'
 const Login = () => {
-  const [email,setEmail] = useState(" ");
-  const [password,setPassword] = useState("")
+  const [email,setEmail] = useState(" shena04@gmail.com");
+  const [password,setPassword] = useState("Shena@2024^")
   const clearEmail =()=> setEmail("")
   const clearpassword =()=>setPassword("")
-  
+
+  const handlelogin = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:8888/login",
+        { email, password },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      
+      console.error(error);
+    }
+  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-600 to-gray-900">
       <div className="card bg-white/10 backdrop-blur-md shadow-xl w-full max-w-sm rounded-xl border border-gray-700">
@@ -70,7 +82,7 @@ const Login = () => {
             </div>
           </div>
           <div className="card-actions justify-center">
-            <button className="btn btn-primary rounded-md w-full">Login</button>
+            <button className="btn btn-primary rounded-md w-full"onClick={handlelogin}>Login</button>
           </div>
         </div>
       </div>
