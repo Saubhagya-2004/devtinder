@@ -17,14 +17,15 @@ const { userAuth } = require("./middlewares/auth");
 const user = require("./models/user");
 //encrypt password
 const bcrypt = require("bcrypt");
-const authRouter = require('./Routes/authroutes');
-const profileRouter = require('./Routes/profileRouter');
-const connectionreq = require('./Routes/connectionreq');
+const authRouter = require("./Routes/authroutes");
+const profileRouter = require("./Routes/profileRouter");
+const connectionreq = require("./Routes/connectionreq");
 
-const UserRequest = require('./Routes/UserRequest');
+const UserRequest = require("./Routes/UserRequest");
 //use cors
-const cors= require("cors")
-app.use(cors())
+const cors = require("cors");
+//enable cresentials
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 //add data into database
 // app.post("/signup", async (req, res) => {
 //   // console.log(req.body);
@@ -153,20 +154,20 @@ app.use(cors())
 
 //login user
 
-app.use('/', authRouter);
-app.use('/',profileRouter);
-app.use('/',connectionreq);
-app.use('/',UserRequest);
-app.get('/',(req,res)=>{
+app.use("/", authRouter);
+app.use("/", profileRouter);
+app.use("/", connectionreq);
+app.use("/", UserRequest);
+app.get("/", (req, res) => {
   res.send("Welcome to the home page");
-})
+});
 connectDB()
   .then(() => {
     console.log("Database connection sucessfully...");
     app.listen(8888, () => {
       console.log("Server connected successfully on port 8888");
     });
-  }) 
+  })
   .catch((err) => {
     console.error("database cannot be connected");
   });
