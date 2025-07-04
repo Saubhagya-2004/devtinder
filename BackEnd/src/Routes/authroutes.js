@@ -59,10 +59,20 @@ authRouter.post("/login", async (req, res) => {
          expires: expiretoken
       });
       
-      
+      const data ={
+        userId:user._id,
+        firstName:user.firstName,
+        lastName:user.lastName,
+        Profile:user.profile,
+        age:user.age,
+        Skill:user.skills,
+        language:user.language,
+        profession:user.profession,
+        age:user.age
+      }
       res.json({
-        data:user.firstName,
-        message:"login sucessFully !!"
+        data:data,
+        message:"login sucessFully !!",
       });
     } else {
       throw new Error("invalid credentials ");

@@ -1,20 +1,28 @@
 import React, { useState } from "react";
 import axios from 'axios'
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/appSlice";
+import { Link } from "react-router-dom";
+import { BASE_URL } from "../utils/constant";
+
+
 const Login = () => {
   const [email,setEmail] = useState(" shena04@gmail.com");
   const [password,setPassword] = useState("Shena@2024^")
   const clearEmail =()=> setEmail("")
   const clearpassword =()=>setPassword("")
-
+const dispatch = useDispatch()
   const handlelogin = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:8888/login",
+        BASE_URL+"/login",
         { email, password },
         { withCredentials: true }
       );
+      // console.log(res)
+      dispatch(addUser(res.data))
+
     } catch (error) {
-      
       console.error(error);
     }
   }
@@ -81,9 +89,9 @@ const Login = () => {
               )}
             </div>
           </div>
-          <div className="card-actions justify-center">
+         <Link to='/'> <div className="card-actions justify-center">
             <button className="btn btn-primary rounded-md w-full"onClick={handlelogin}>Login</button>
-          </div>
+          </div></Link>
         </div>
       </div>
     </div>

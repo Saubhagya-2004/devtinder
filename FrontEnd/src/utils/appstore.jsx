@@ -1,7 +1,10 @@
-import {configureStore}
-import React from 'react'
+import { configureStore } from "@reduxjs/toolkit";
+import React from "react";
+import Userreducer from "./appSlice";
+const appstore = configureStore({
+  reducer: {
+    user: Userreducer,
+  },
+});
 
-const appstore = 
-
-
-export default appstore
+export default appstore;
