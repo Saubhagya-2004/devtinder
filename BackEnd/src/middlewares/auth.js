@@ -6,7 +6,7 @@ const userAuth =async(req,res,next)=>{
     const cookies =req.cookies;
     const {token} = cookies;
     if(!token){
-     return res.status(404).send('Unauthorized Access: Token not found')
+     return res.status(401).send('Unauthorized Access: Token not found')
     }
     //validate my token
     const decodedMessage = await jwt.verify(token,'Dev@$Tinder2004*');
