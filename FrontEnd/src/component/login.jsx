@@ -1,31 +1,34 @@
 import React, { useState } from "react";
-import axios from 'axios'
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/appSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
 
-
 const Login = () => {
-  const [email,setEmail] = useState(" shena04@gmail.com");
-  const [password,setPassword] = useState("Shena@2024^")
-  const clearEmail =()=> setEmail("")
-  const clearpassword =()=>setPassword("")
-const dispatch = useDispatch()
+  const [email, setEmail] = useState(" shena04@gmail.com");
+  const [password, setPassword] = useState("Shena@2024^");
+  const clearEmail = () => setEmail("");
+  const clearpassword = () => setPassword("");
+  const navigate = useNavigate();
+  //dynamic
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const handlelogin = async () => {
     try {
       const res = await axios.post(
-        BASE_URL+"/login",
+        BASE_URL + "/login",
         { email, password },
         { withCredentials: true }
       );
       // console.log(res)
-      dispatch(addUser(res.data))
-
-    } catch (error) {
-      console.error(error);
+      dispatch(addUser(res.data));
+      return navigate("/");
+    } catch (err) {
+      setError(err?.response?.data || "something Went Wrong");
+      console.error(err);
     }
-  }
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-600 to-gray-900">
       <div className="card bg-white/10 backdrop-blur-md shadow-xl w-full max-w-sm rounded-xl border border-gray-700">
@@ -61,14 +64,14 @@ const dispatch = useDispatch()
               )}
             </div>
             {/* password */}
-              <label
+            <label
               htmlFor="password"
               className="block text-white mb-3 cursor-pointer"
             >
               Password
             </label>
-            
-              <div className="relative ">
+
+            <div className="relative ">
               <input
                 id="password"
                 type="password"
@@ -89,9 +92,19 @@ const dispatch = useDispatch()
               )}
             </div>
           </div>
-         <Link to='/'> <div className="card-actions justify-center">
-            <button className="btn btn-primary rounded-md w-full"onClick={handlelogin}>Login</button>
-          </div></Link>
+          <div className="card-actions justify-center">
+            {error && (
+              <p className="absolute top-0  left-1/2 -translate-x-1/2 -translate-y-1/2 bg-rose-50 text-rose-700 px-6 py-3 rounded-lg font-bold z-10 text-center w-max max-w-[90%] uppercase">
+                {error}
+              </p>
+            )}
+            <button
+              className="btn btn-primary rounded-md w-full"
+              onClick={handlelogin}
+            >
+              Login
+            </button>
+          </div>
         </div>
       </div>
     </div>
