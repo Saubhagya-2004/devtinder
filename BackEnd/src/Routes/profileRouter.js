@@ -1,7 +1,10 @@
 const express = require("express");
 const profilereq = express.Router();
 const { userAuth } = require("../middlewares/auth");
-const { validateprofileEdit, validatepasswordEdit} = require("../utils/validation");
+const {
+  validateprofileEdit,
+  validatepasswordEdit,
+} = require("../utils/validation");
 const bcrypt = require("bcrypt");
 //get profile
 profilereq.get("/profile", userAuth, async (req, res) => {
@@ -10,7 +13,9 @@ profilereq.get("/profile", userAuth, async (req, res) => {
     const user = req.user;
     const cookies = req.token;
     // console.log(cookies);
-    res.send(user);
+    res.json({
+      data: user,
+    });
   } catch (err) {
     res.status(400).send("Error finding the user: " + err.message);
   }
@@ -38,20 +43,19 @@ profilereq.patch("/profile/edit", userAuth, async (req, res) => {
   }
 });
 //password edit
-profilereq.patch('/profile/password',userAuth, async(req,res)=>{
-  try{
+profilereq.patch("/profile/password", userAuth, async (req, res) => {
+  try {
     validatepasswordEdit(req);
     const User = req.user;
-    const {password } = req.body;
-    if(password){
+    const { password } = req.body;
+    if (password) {
       const passwordhash = await bcrypt.hash(password, 10);
       User.password = passwordhash;
       await User.save();
     }
     res.send(`${User.firstName}, password updated successfully`);
-  }
-  catch(err){
+  } catch (err) {
     res.status(400).send("Error updating the password: " + err.message);
   }
-})
+});
 module.exports = profilereq;
