@@ -20,14 +20,14 @@ const validation = (req) => {
     throw new Error("Invalid request");
   }
 
-};
+}; 
 const validateprofileEdit = (req)=>{
   const allowed =[
     "profile",
     "age",
     "skills",
     "firstName",
-    "LastName",
+    "lastName",
     "gender",
     "Bio",
     "Language",

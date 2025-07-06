@@ -1,10 +1,15 @@
 import React from 'react'
+import Profileedit from './Profileedit'
+import { useSelector } from 'react-redux'
 
 const profile = () => {
+  const user = useSelector((state)=>state.user)
+  console.log(user);
+  
   return (
-    <div className='min-h-screen  '>
-      profile
-    </div>
+   user&&( <div className='min-h-screen  '>
+      <Profileedit user={user.data}/>
+    </div>)
   )
 }
 

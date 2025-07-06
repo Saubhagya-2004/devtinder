@@ -26,10 +26,10 @@ const Feed = () => {
   }, []);
 
   return feed&&(
-    <div className="min-h-screen bg-gradient-to-b from-gray-500 to-gray-300 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-500 to-gray-300 py-4 sm:py-8 sm:px-4 px-2">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-center  items-center">
-          <div className="sm:ml-3 max-w-md md:max-w-lg lg:max-w-xl">
+        <div className="flex justify-center  items-center ">
+          <div className="sm:ml-3 max-w-md md:max-w-lg lg:max-w-xl w-full transition-all duration-300 my-10">
             <Usercard user={feed.data[0]}/>
           </div>
           

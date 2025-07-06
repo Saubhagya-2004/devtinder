@@ -45,19 +45,20 @@ const UserScema = new mongoose.Schema(
       required: true,
       type: String,
       validate(value) {
-        if (!["male", "female", "others"].includes(value)) {
+        if (!["Male", "Female", "others"].includes(value)) {
           throw new Error("Gender is not valid");
         }
       },
     },
     age: {
       type: Number,
+      required:true,
       min: 18,
       max: 100,
     },
     profession: {
       type: String,
-    },
+    }, 
     profile: {
       type: String,
       default:
