@@ -74,7 +74,7 @@ connectionreq.post(
       const connectionRequest = await Connectionreq.findOne({
         _id: requestid,
         ReciverId: LoggedinUser._id,
-        status: "interest", // Only allow review if the status is 'interest'
+        status: "interested", // Only allow review if the status is 'interest'
       });
 
       if (!connectionRequest) {

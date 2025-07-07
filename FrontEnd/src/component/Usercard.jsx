@@ -9,7 +9,7 @@ const Usercard = ({ user }) => {
     <div className="flex justify-center p-4">
       <div className="card w-full max-w-sm bg-gradient-to-br from-gray-700 to-gray-800 text-white rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
         {/* Profile Image */}
-        <figure className="relative h-70 overflow-hidden">
+        <figure className=" h-70 overflow-hidden">
           <img
             src={profile}
             alt={`${firstName} ${lastName}`}

@@ -9,7 +9,7 @@ UserRequest.get("/user/requests/recived", userAuth, async (req, res) => {
     const LoggedinUser = req.user;
     const connection = await Connectionreq.find({
       ReciverId: LoggedinUser._id,
-      status: "interest",
+      status: "interested",
     }).populate("senderId", ["firstName", "lastName", "profile"]);
     // }).populate("senderId","firstName lastName"); //same
 
@@ -40,7 +40,7 @@ UserRequest.get("/user/connections", userAuth, async (req, res) => {
       .populate("senderId", "firstName LastName age gender profile Bio")
       .populate("ReciverId", "firstName LastName age gender profile Bio");
     if (connectionreq.length === 0) {
-      res.json({
+     return res.json({
         message: "Connection not Found",
       });
     }
