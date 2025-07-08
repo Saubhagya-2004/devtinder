@@ -19,7 +19,6 @@ const Usercard = ({ user }) => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent" />
         </figure>
-
         
         <div className="p-6 space-y-4">
           {/* Name */}

@@ -47,6 +47,13 @@ const Header = () => {
           {/* Navigation */}
           {user && (
             <div className="flex items-center space-x-4">
+               {/* req Link */}
+               <Link
+                to="/request"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-full transition-all duration-300 border border-transparent hover:border-pink-200"
+              >
+                Requests
+              </Link>
               {/* Connections Link */}
               <Link
                 to="/connection"

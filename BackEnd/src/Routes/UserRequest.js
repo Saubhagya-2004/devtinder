@@ -10,11 +10,11 @@ UserRequest.get("/user/requests/recived", userAuth, async (req, res) => {
     const connection = await Connectionreq.find({
       ReciverId: LoggedinUser._id,
       status: "interested",
-    }).populate("senderId", ["firstName", "lastName", "profile"]);
+    }).populate("senderId", ["firstName", "lastName", "profile"]).populate("ReciverId",["profile"]) //populate senderId with firstName, lastName and profile;
     // }).populate("senderId","firstName lastName"); //same
 
     if (connection.length === 0) {
-      return res.status(400).json({ message: "Invalid connection request" });
+      return res.status(400).json({ message: "NO connection request Found" });
     }
     res.json({
       message: "Data fetched sucessfully",
