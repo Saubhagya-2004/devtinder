@@ -37,8 +37,8 @@ UserRequest.get("/user/connections", userAuth, async (req, res) => {
         { senderId: LoggedinUser._id, status: "accepted" },
       ],
     })
-      .populate("senderId", "firstName LastName age gender profile Bio")
-      .populate("ReciverId", "firstName LastName age gender profile Bio");
+      .populate("senderId", "firstName lastName age gender profile Bio profession")
+      .populate("ReciverId", "firstName lastName age gender profile Bio profession");
     if (connectionreq.length === 0) {
      return res.json({
         message: "Connection not Found",
@@ -94,7 +94,7 @@ UserRequest.get("/feed", userAuth, async (req, res) => {
         //and not send loggedin user profile
         { _id: { $ne: LoggedinUser._id } },
         // {profession:{$eq:LoggedinUser.profession}}, //filter by profession
-        {age:{$gte:LoggedinUser.age-5,$lte:LoggedinUser.age+5}}, //filter by age
+        // {age:{$gte:LoggedinUser.age-5,$lte:LoggedinUser.age+5}}, //filter by age
       ],
     }).select("firstName lastName age gender Bio skills profession profile").skip(skip).limit(limit);
     // console.log(user + "not send req");

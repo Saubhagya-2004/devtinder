@@ -1,6 +1,8 @@
 import React from "react";
 
 const Usercard = ({ user }) => {
+ 
+
   const { firstName, lastName, age, gender, profession, profile, Bio, skills } = user;
 
   const skillsDisplay = Array.isArray(skills) ? skills.join(", ") : skills;
