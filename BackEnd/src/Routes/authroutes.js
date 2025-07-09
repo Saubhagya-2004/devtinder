@@ -14,8 +14,8 @@ authRouter.use("/signup", async (req, res) => {
     req.body.password = passwordhash;
     //user input
     const user = new User(req.body);
-    await user.save();
-    res.send("User added successfully");
+    const data=await user.save();
+    res.json({ message: "User added successfully", data });
   } catch (err) {
     res.status(400).send("Error adding the user: " + err.message);
   }

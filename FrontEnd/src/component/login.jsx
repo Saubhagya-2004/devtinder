@@ -8,12 +8,23 @@ import { BASE_URL } from "../utils/constant";
 const Login = () => {
   const [email, setEmail] = useState(" shena04@gmail.com");
   const [password, setPassword] = useState("Shena@2024^");
+  const [age,setAge] = useState()
+  const[firstName,setFirstName] = useState();
+  const[lastName,setLastName] = useState()
+  const[gender,setGender] = useState()
+  const[profession,setProfession] = useState()
+  const[Bio,setBio] = useState()
+  const[skills,setSkills] = useState()
+  const[language,setLanguage] = useState()
+  const[loginform,setLoginform] = useState(true)
   const clearEmail = () => setEmail("");
   const clearpassword = () => setPassword("");
+  const clearFirstname = () => setFirstName("");
   const navigate = useNavigate();
   //dynamic
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+
   const handlelogin = async () => {
     try {
       const res = await axios.post(
@@ -26,7 +37,7 @@ const Login = () => {
       return navigate("/");
     } catch (err) {
       setError(err?.response?.data || "something Went Wrong");
-      console.error(err);
+      // console.error(err);
     }
   };
   return (
@@ -34,7 +45,7 @@ const Login = () => {
       <div className="card bg-white/10 backdrop-blur-md shadow-xl w-full max-w-sm rounded-xl border border-gray-700">
         <div className="card-body p-8">
           <h2 className="card-title text-white text-3xl font-bold my-2 justify-center underline">
-            Login
+          Login
           </h2>
           <div className="mb-4 p-3">
             <label
@@ -91,7 +102,10 @@ const Login = () => {
                 </button>
               )}
             </div>
+            
+            
           </div>
+         
           <div className="card-actions justify-center">
             {error && (
               <p className="absolute top-0  left-1/2 -translate-x-1/2 -translate-y-1/2 bg-rose-50 text-rose-700 px-6 py-3 rounded-lg font-bold z-10 text-center w-max max-w-[90%] uppercase">
@@ -105,6 +119,7 @@ const Login = () => {
               Login
             </button>
           </div>
+          <Link to="/signup"><p className="text-white underline cursor-pointer">New User? Sign Up </p></Link>
         </div>
       </div>
     </div>

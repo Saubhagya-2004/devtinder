@@ -45,7 +45,7 @@ const UserScema = new mongoose.Schema(
       required: true,
       type: String,
       validate(value) {
-        if (!["Male", "Female", "others"].includes(value)) {
+        if (!["Male", "Female", "Others"].includes(value)) {
           throw new Error("Gender is not valid");
         }
       },
