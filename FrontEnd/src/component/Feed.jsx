@@ -24,7 +24,13 @@ const Feed = () => {
   useEffect(() => {
     getfeed();
   }, []);
-
+ if ( !feed) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <h1>No requests found</h1>
+      </div>
+    );
+  }
   return feed&&(
     <div className="min-h-screen bg-gradient-to-b from-gray-500 to-gray-300 py-4 sm:py-8 sm:px-4 px-2">
       <div className="max-w-4xl mx-auto">
