@@ -15,7 +15,7 @@ const Feed = () => {
     
     try {
       const res = await axios.get(BASE_URL + "/feed", { withCredentials: true });
-      console.log(res);
+      // console.log(res);
       
       // Dispatch the data array, not the entire response
       dispatch(addFeed(res.data.data || res.data));

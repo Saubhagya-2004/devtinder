@@ -6,8 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
 
 const Login = () => {
-  const [email, setEmail] = useState(" shena04@gmail.com");
-  const [password, setPassword] = useState("Shena@2024^");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [age,setAge] = useState()
   const[firstName,setFirstName] = useState();
   const[lastName,setLastName] = useState()
@@ -52,7 +52,7 @@ const Login = () => {
               htmlFor="email"
               className="block text-white mb-1 cursor-pointer pb-2"
             >
-              Email : {email}
+              Email :
             </label>
             <div className="relative mb-4">
               <input

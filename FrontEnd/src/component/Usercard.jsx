@@ -9,7 +9,7 @@ const Usercard = ({ user }) => {
 const handlesendreq = async(status,userid)=>{
   try{
     const res = await axios.post(BASE_URL+"/request/send/"+status+"/"+userid,{},{withCredentials:true})
-    console.log(res);
+    // console.log(res);
     dispatch(deleteuserFeed(userid))
   }
 

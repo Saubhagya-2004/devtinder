@@ -133,7 +133,7 @@ const Profileedit = ({ user }) => {
                         htmlFor="age"
                         className="block text-white/80 mb-1 text-sm font-medium"
                       >
-                        Age{age}
+                        Age
                       </label>
                       <input
                         id="age"

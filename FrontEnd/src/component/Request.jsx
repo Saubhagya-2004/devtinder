@@ -38,10 +38,10 @@ const Request = () => {
   console.log("Request state:", request);
 
   // Check if request is null, undefined, or not an array
-  if (!request || !Array.isArray(request)) {
+  if (!request ) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <h1>Loading...</h1>
+        <h1>Not found</h1>
       </div>
     );
   }
