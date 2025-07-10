@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
 import { FaTimes, FaCheck } from "react-icons/fa";
-import { newUser } from "../utils/SignupSlice";
 
 const Signup = () => {
   // Form states
@@ -18,20 +17,19 @@ const Signup = () => {
     profession: "",
     skills: "",
     language: "",
-    Bio: ""
+    Bio: "",
   });
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -39,21 +37,22 @@ const Signup = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
-    
+
     try {
       const res = await axios.post(`${BASE_URL}/signup`, formData, {
-        withCredentials: true
+        withCredentials: true,
       });
-      
-      dispatch(newUser(res.data));
+      // console.log(res);
+
       setSuccess("Account created successfully! Redirecting to login...");
-      
+
       setTimeout(() => {
-        navigate('/login');
+        navigate("/login");
       }, 2000);
-      
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+      // console.log(err?.response?.data);
+
+      setError(err?.response?.data || "Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
@@ -166,8 +165,6 @@ const Signup = () => {
                 </div>
               </div>
 
-          
-
               <div>
                 <label className="block text-white mb-1">Profession</label>
                 <input
@@ -215,9 +212,12 @@ const Signup = () => {
               disabled={isSubmitting}
               className="btn btn-primary rounded-md w-full mt-6"
             >
-              {isSubmitting ? 'Creating Account...' : 'Sign Up'}
+              {isSubmitting ? "Creating Account..." : "Sign Up"}
             </button>
           </form>
+            <Link to="/login" className="text-white underline">
+              <p>Existing User? Login!!</p>
+            </Link>
         </div>
       </div>
     </div>
