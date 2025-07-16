@@ -9,7 +9,7 @@ const userAuth =async(req,res,next)=>{
      return res.status(401).send('Unauthorized Access: Token not found')
     }
     //validate my token
-    const decodedMessage = await jwt.verify(token,'Dev@$Tinder2004*');
+    const decodedMessage = await jwt.verify(token, process.env.JWT_SECRET);
     const {_id} = decodedMessage;
     const user = await User.findById(_id);
     if(!user){

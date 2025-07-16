@@ -153,7 +153,7 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 // })
 
 //login user
-
+require('dotenv').config();
 app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", connectionreq);
@@ -164,10 +164,12 @@ app.get("/", (req, res) => {
 connectDB()
   .then(() => {
     console.log("Database connection sucessfully...");
-    app.listen(8888, () => {
-      console.log("Server connected successfully on port 8888");
+    app.listen(process.env.PORT, () => {
+      console.log("Server connected successfully on port " + process.env.PORT);
+     
     });
   })
   .catch((err) => {
     console.error("database cannot be connected");
   });
+ 
