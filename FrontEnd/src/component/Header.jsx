@@ -36,25 +36,26 @@ const Header = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link
-              to="/"
+              to={user ? "/" : "/login"}
               className="flex items-center space-x-2 text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 transition-all duration-300"
             >
               <span className="text-3xl">🔥</span>
               <span className="hidden sm:inline">Tinder</span>
             </Link>
+           
           </div>
 
-          {/* Navigation */}
+         
           {user && (
             <div className="flex items-center space-x-4">
-               {/* req Link */}
+             
                <Link
                 to="/request"
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-full transition-all duration-300 border border-transparent hover:border-pink-200"
               >
                 Requests
               </Link>
-              {/* Connections Link */}
+              
               <Link
                 to="/connection"
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-full transition-all duration-300 border border-transparent hover:border-pink-200"
@@ -62,7 +63,7 @@ const Header = () => {
                 Connections
               </Link>
 
-              {/* Profile Dropdown */}
+             
               <div className="relative">
                 <div className="dropdown dropdown-end">
                   {/* Profile Avatar */}

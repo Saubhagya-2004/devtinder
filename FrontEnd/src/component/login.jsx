@@ -79,7 +79,7 @@ const Login = () => {
               htmlFor="password"
               className="block text-white mb-3 cursor-pointer"
             >
-              Password
+              Password :
             </label>
 
             <div className="relative ">
