@@ -82,11 +82,11 @@ const Request = () => {
                     Status: {req.status}
                   </p>
                 </div>
-                 <img
+                 {/* <img
                   src={req.ReciverId?.profile || "/default-avatar.png"}
                   alt="Profile"
                   className="w-16 h-16 rounded-full object-cover border-2 border-indigo-200"
-                />
+                /> */}
               </div>
 
               <div className="flex justify-end space-x-2">
