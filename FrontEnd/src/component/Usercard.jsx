@@ -24,7 +24,7 @@ const handlesendreq = async(status,userid)=>{
 
   return (
     <div className="flex justify-center p-4">
-      <div className="card w-full max-w-sm bg-gradient-to-br from-gray-700 to-gray-800 text-white rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
+      <div className="card w-full h-[80vh] max-w-sm bg-gradient-to-br from-gray-700 to-gray-800 text-white rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
         {/* Profile Image */}
         <figure className=" h-70 overflow-hidden">
           <img

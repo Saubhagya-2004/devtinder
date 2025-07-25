@@ -22,10 +22,15 @@ const profileRouter = require("./Routes/profileRouter");
 const connectionreq = require("./Routes/connectionreq");
 
 const UserRequest = require("./Routes/UserRequest");
+//socket
+const http = require('http')
 //use cors
 const cors = require("cors");
+const intializesocket = require("./utils/socket");
 //enable cresentials
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
+
 //add data into database
 // app.post("/signup", async (req, res) => {
 //   // console.log(req.body);
@@ -161,10 +166,18 @@ app.use("/", UserRequest);
 app.get("/", (req, res) => {
   res.send("Welcome to the home page");
 });
+
+//socket connec
+const server= http.createServer(app);
+intializesocket(server);
+
+
+
+
 connectDB()
   .then(() => {
     console.log("Database connection sucessfully...");
-    app.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT, () => {
       console.log("Server connected successfully on port " + process.env.PORT);
      
     });
