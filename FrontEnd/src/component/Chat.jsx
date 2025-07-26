@@ -1,64 +1,104 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { createSocketConnection } from "../utils/socket";
 
 const Chat = () => {
-  const [messages, setMessages] = useState([{ text: "Hello !!!" }]);
+  const [messages, setMessages] = useState([]);
+  const [newmessage, setNewmessage] = useState("");
+  const socketRef = useRef(null);
+  
   const { targetuserId } = useParams();
+  const connections = useSelector((state) => state.connection);
+  const user = useSelector((store) => store.user);
+  
+  const userId = user?.data?._id;
+  const firstName = user?.data?.firstName;
+  
+  // Find target user name
+  const targetUser = connections?.find(conn => conn._id === targetuserId);
+  const targetUserName = targetUser ? `${targetUser.firstName} ${targetUser.lastName}` : "Unknown User";
+
+  useEffect(() => {
+    const socket = createSocketConnection();
+    socketRef.current = socket;
+    
+    socket.emit("joinChat", { firstName, userId, targetuserId });
+    
+    socket.on("messageRecived", ({ firstName: senderName, textmsg }) => {
+      console.log(senderName + ":" + textmsg);
+      setMessages(prevMessages => [
+        ...prevMessages,
+        { text: textmsg, sender: senderName }
+      ]);
+    });
+    
+    return () => {
+      socket.disconnect();
+      socketRef.current = null;
+    };
+  }, [userId, targetuserId, firstName]);
+
+  const sendMessage = () => {
+    if (socketRef.current && newmessage.trim()) {
+      socketRef.current.emit("sendMessage", {
+        firstName,
+        userId,
+        targetuserId,
+        textmsg: newmessage
+      });
+      setNewmessage("");
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
 
   return (
     <div className="w-1/2 mx-auto border border-gray-300 m-5 h-[80vh] p-5 flex flex-col rounded-2xl">
+      
       <div className="border-b border-gray-300 pb-2 mb-2">
         <h1 className="text-lg font-medium">
-          Chat with User #{targetuserId}
+          Chat with {targetUserName}
         </h1>
       </div>
 
       <div className="flex-1 overflow-y-auto mb-4 bg-gray-100 p-2 rounded">
         {messages.map((msg, index) => (
-          <React.Fragment key={index}>
-            <div className="chat chat-start">
-              <div className="chat-image avatar">
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="Tailwind CSS chat bubble component"
-                    src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
-                  />
-                </div>
-              </div>
+          <div key={index} className="mb-4">
+            <div className={`chat ${msg.sender === firstName ? 'chat-end' : 'chat-start'}`}>
               <div className="chat-header">
-                Obi-Wan Kenobi
-                <time className="text-xs opacity-50">12:45</time>
+                {msg.sender === firstName ? firstName : targetUser?.firstName || msg.sender}
+                <time className="text-xs opacity-500">
+                  {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </time>
               </div>
-              <div className="chat-bubble">You were the Chosen One!</div>
-              <div className="chat-footer opacity-50">Delivered</div>
+              <div className="chat-bubble bg-pink-200 text-black">{msg.text}</div>
+              <div className="chat-footer opacity-50">
+                {msg.sender === firstName ? 'Sent' : 'Delivered'}
+              </div>
             </div>
-            <div className="chat chat-end">
-              <div className="chat-image avatar">
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="Tailwind CSS chat bubble component"
-                    src="https://img.daisyui.com/images/profile/demo/anakeen@192.webp"
-                  />
-                </div>
-              </div>
-              <div className="chat-header">
-                Anakin
-                <time className="text-xs opacity-50">12:46</time>
-              </div>
-              <div className="chat-bubble">{msg.text}</div>
-              <div className="chat-footer opacity-50">Seen at 12:46</div>
-            </div>
-          </React.Fragment>
+          </div>
         ))}
       </div>
 
       <div className="flex gap-2">
         <input
+          value={newmessage}
+          onChange={(e) => setNewmessage(e.target.value)}
+          onKeyPress={handleKeyPress}
           type="text"
           className="flex-1 border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
           placeholder="Type a message..."
         />
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+        <button
+          onClick={sendMessage}
+          disabled={!newmessage.trim()}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 disabled:bg-gray-400"
+        >
           Send
         </button>
       </div>

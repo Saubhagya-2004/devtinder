@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 const Connection = () => {
   const connections = useSelector((state) => state.connection);
+
   const dispatch = useDispatch();
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,10 +36,10 @@ const Connection = () => {
   useEffect(() => {
     fetchedconnection();
   }, []);
-
+  
   if (!connections) return <div className="flex justify-center items-center h-screen"><h1>Loading...</h1></div>;
   if (connections.length === 0) return <div className="flex justify-center items-center h-screen"><h1>No connections found</h1></div>;
-
+  
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <h1 className="text-3xl font-bold text-center mb-8 text-indigo-700">Your Connections</h1>
@@ -46,9 +47,10 @@ const Connection = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {connections.map((connection, _id) => (
           <div 
-            key={connection._id}
-            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+          key={connection._id}
+          className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
           >
+          
             <div className="p-4">
               <div className="flex items-center space-x-4 mb-4">
                 <img 

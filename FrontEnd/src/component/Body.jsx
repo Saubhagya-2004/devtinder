@@ -10,7 +10,7 @@ import { addUser } from "../utils/appSlice";
 const Body = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userDAta = useSelector((state) => state.user);
+  const userDAta = useSelector((store) => store.user);
 
   const fetchUser = async () => {
     try {
