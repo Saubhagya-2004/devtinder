@@ -40,6 +40,11 @@ const Login = () => {
       // console.error(err);
     }
   };
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handlelogin();
+    }
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-600 to-gray-900">
       <div className="card bg-white/10 backdrop-blur-md shadow-xl w-full max-w-sm rounded-xl border border-gray-700">
@@ -91,6 +96,7 @@ const Login = () => {
                 placeholder="Enter Your Password!!"
                 required
                 onChange={(e) => setPassword(e.target.value)}
+                 onKeyPress={handleKeyPress}
               />
               {password && (
                 <button
