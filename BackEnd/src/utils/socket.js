@@ -1,6 +1,7 @@
 const socket = require("socket.io");
 const crypto = require("crypto");
 const { Chat } = require("../models/Chat");
+const connectioReq= require("../models/connectionreq")
 
 const getSecretRoomId = (userId, targetuserId) => {
   return crypto
@@ -28,6 +29,19 @@ const intializesocket = (server) => {
         try {
           const roomId = getSecretRoomId(userId, targetuserId);
           console.log(firstName + " ::" + textmsg);
+        const connection= await connectioReq.find({
+          $or:[
+            {senderId:userId,ReciverId:targetuserId,status:"accepted"},
+            {senderId:targetuserId,ReciverId:userId,status:"accepted"}
+          ]
+          
+        })
+        if(connection.length==0){
+           socket.emit("messageError", {
+          error: "You are not connected with this user"
+        });
+        return;
+        }
           let chat = await Chat.findOne({
             participants: { $all: [userId, targetuserId] },
           });
