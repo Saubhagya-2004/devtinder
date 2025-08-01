@@ -2,8 +2,6 @@
 
 A full-stack Tinder-like web application built with the MERN stack (MongoDB, Express.js, React, Node.js) featuring user authentication, matching system, and real-time encrypted chat.
 
-![Tinder Clone Preview](https://i.imgur.com/JqkX9zN.png) 
-*(Add your actual screenshot URL above)*
 
 ## ✨ Features
 
@@ -32,7 +30,7 @@ A full-stack Tinder-like web application built with the MERN stack (MongoDB, Exp
 **Frontend:**
 - React.js
 - Redux (state management)
-- Material-UI
+- Talwind Css
 - Axios
 - Socket.io-client
 
@@ -48,5 +46,5 @@ A full-stack Tinder-like web application built with the MERN stack (MongoDB, Exp
 
 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/tinder-clone-mern.git
-cd tinder-clone-mern
+git clone https://github.com/Saubhagya-2004/devtinder
+cd devtinder
