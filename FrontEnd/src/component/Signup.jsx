@@ -62,7 +62,7 @@ const Signup = () => {
 
         <div className="text-center pt-10 pb-6 px-10 border-b border-white/10">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 mb-4">
-            <span className="text-3xl">🚀</span>
+            <span className="text-3xl">💻</span>
           </div>
           <h2 className="text-3xl font-bold text-white mb-2 tracking-tight">Join DevTinder</h2>
           <p className="text-gray-400 font-medium">Create your developer match profile</p>
