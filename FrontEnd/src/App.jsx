@@ -11,24 +11,27 @@ import Connection from "./component/connection";
 import Request from "./component/Request";
 import Signup from "./component/Signup"
 import Chat from "./component/Chat";
+import { Toaster } from "react-hot-toast";
+
 const App = () => {
   return (
     <>
-    <Provider store={appstore}>
-      <BrowserRouter basename="/">
-        <Routes>
-          <Route path="/" element={<Body />}>
-            {/* These are nested routes - they will render inside <Outlet /> */}
-            <Route path="/" element={<Feed/>}/>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup/>}/>
-            <Route path="/connection" element={<Connection/>}/>
-            <Route path="/request" element={<Request/>}/>
-             <Route path="/chat/:targetuserId" element={<Chat/>}/>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Provider store={appstore}>
+        <Toaster position="top-center" reverseOrder={false} />
+        <BrowserRouter basename="/">
+          <Routes>
+            <Route path="/" element={<Body />}>
+              {/* These are nested routes - they will render inside <Outlet /> */}
+              <Route path="/" element={<Feed />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/connection" element={<Connection />} />
+              <Route path="/request" element={<Request />} />
+              <Route path="/chat/:targetuserId" element={<Chat />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </Provider>
     </>
   );
