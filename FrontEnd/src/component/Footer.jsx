@@ -1,64 +1,59 @@
-import React from 'react'
+import React from 'react';
+import { Code2, Github, Twitter, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <div>
-      <footer className="footer grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 bg-black text-base-content p-10">
-        <nav>
-          <h6 className="font-bold uppercase text-xl sm:text-sm text-white">Services</h6>
-          <a className="link link-hover text-gray-200">Branding</a>
-          <a className="link link-hover text-gray-200">Design</a>
-          <a className="link link-hover text-gray-200">Marketing</a>
-          <a className="link link-hover text-gray-200">Advertisement</a>
-        </nav>
-        <nav>
-          <h6 className="font-bold uppercase text-xl sm:text-sm text-gray-100 ">Company</h6>
-          <a className="link link-hover hover:underline-offset-8 text-gray-200">About us</a>
-          <a className="link link-hover text-gray-200">Contact</a>
-          <a className="link link-hover text-gray-200">Jobs</a>
-          <a className="link link-hover text-gray-200">Press kit</a>
-        </nav>
-        <nav className='text-white'>
-          <h6 className="footer-title flex items-center">Social</h6>
-          <div className="grid grid-flow-col gap-4">
-            <a>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current">
-                <path
-                  d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
-              </svg>
-            </a>
-            <a>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current">
-                <path
-                  d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-              </svg>
-            </a>
-            <a>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current">
-                <path
-                  d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-              </svg>
-            </a>
-          </div>
-        </nav>
-      </footer>
-    </div>
-  )
-}
+    <footer className="w-full bg-[#0d1117]/80 backdrop-blur-xl border-t border-white/5 pt-16 pb-8 px-6 lg:px-12 mt-auto">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
 
-export default Footer
+        {/* Brand Section */}
+        <div className="flex flex-col gap-4 max-w-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
+              <Code2 size={24} className="text-orange-500" />
+            </div>
+            <span className="text-xl font-bold tracking-tight text-white drop-shadow-sm">DevTinder</span>
+          </div>
+          <p className="text-gray-400 text-sm leading-relaxed">
+            The ultimate platform for finding your next project collaborator or coding buddy. Seamless matchmaking for engineers globally.
+          </p>
+        </div>
+
+        {/* Links Section */}
+        <div className="flex gap-16 sm:gap-24">
+          <div className="flex flex-col gap-3">
+            <h6 className="text-white font-semibold tracking-wide text-sm mb-2 uppercase opacity-80">Platform</h6>
+            <a className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">Explore Developers</a>
+            <a className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">Projects</a>
+            <a className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">Pricing</a>
+          </div>
+          <div className="flex flex-col gap-3">
+            <h6 className="text-white font-semibold tracking-wide text-sm mb-2 uppercase opacity-80">Company</h6>
+            <a className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">About Us</a>
+            <a className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">Careers</a>
+            <a className="text-gray-400 hover:text-white transition-colors text-sm cursor-pointer">Terms & Privacy</a>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <p className="text-gray-500 text-sm">
+          © {new Date().getFullYear()} DevTinder Inc. All rights reserved.
+        </p>
+        <div className="flex items-center gap-5">
+          <a className="text-gray-400 hover:text-orange-400 transition-colors cursor-pointer">
+            <Github size={20} />
+          </a>
+          <a className="text-gray-400 hover:text-orange-400 transition-colors cursor-pointer">
+            <Twitter size={20} />
+          </a>
+          <a className="text-gray-400 hover:text-orange-400 transition-colors cursor-pointer">
+            <Linkedin size={20} />
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

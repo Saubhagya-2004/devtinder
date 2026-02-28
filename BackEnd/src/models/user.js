@@ -52,13 +52,13 @@ const UserScema = new mongoose.Schema(
     },
     age: {
       type: Number,
-      required:true,
+      required: true,
       min: 18,
       max: 100,
     },
     profession: {
       type: String,
-    }, 
+    },
     profile: {
       type: String,
       default:
@@ -92,6 +92,12 @@ const UserScema = new mongoose.Schema(
         }
       },
     },
+    resetPasswordOtp: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
+    },
   },
   {
     timestamps: true,
@@ -107,7 +113,7 @@ UserScema.methods.getjwt = async function () {
 };
 //compound index  it will help find query in db
 //putting index 
-UserScema.index({email:1,firstName:1,lastName:1});
+UserScema.index({ email: 1, firstName: 1, lastName: 1 });
 //password validate scema
 UserScema.methods.validatepassword = async function (passwordinputByuser) {
   const user = this;

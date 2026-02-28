@@ -28,10 +28,9 @@ const Feed = () => {
 
   if (!feed || feed.length === 0) {
     return (
-      <div className="min-h-[calc(100vh-64px)] bg-[#0d1117] flex items-center justify-center p-4 relative overflow-hidden">
-        {/* Decorative background elements */}
-        <div className="absolute top-[20%] right-[10%] w-[30%] h-[40%] bg-pink-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div className="absolute bottom-[20%] left-[10%] w-[30%] h-[40%] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="min-h-[calc(100vh-64px)] bg-transparent flex items-center justify-center p-4 relative">
+        {/* Decorative background grid (subtle) */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-20 pointer-events-none"></div>
 
         <div className="max-w-md w-full bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-3xl p-10 text-center shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] z-10 transition-all duration-300">
           <div className="w-20 h-20 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-6">
@@ -45,14 +44,13 @@ const Feed = () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-64px)] bg-[#0d1117] relative overflow-hidden flex items-center justify-center py-10 px-4">
-      {/* Decorative background elements */}
-      <div className="absolute top-[10%] left-[20%] w-[40%] h-[50%] bg-pink-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-[10%] right-[20%] w-[40%] h-[50%] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div className="min-h-[calc(100vh-64px)] bg-transparent relative flex items-center justify-center py-10 px-4">
+      {/* Decorative background grid (subtle) */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-20 pointer-events-none"></div>
 
       <div className="w-full max-w-sm relative z-10 flex flex-col items-center">
         {/* Subtle decorative title */}
-        <h1 className="text-sm font-semibold text-pink-500 uppercase tracking-[0.2em] mb-6 opacity-80">Discover</h1>
+        <h1 className="text-sm font-semibold text-indigo-500 uppercase tracking-[0.2em] mb-6 opacity-80">Discover</h1>
 
         {/* The Usercard handles its own sizing now */}
         <Usercard user={feed[0]} />

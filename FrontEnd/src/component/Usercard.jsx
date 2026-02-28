@@ -54,7 +54,7 @@ const Usercard = ({ user }) => {
 
   return (
     <div className="flex justify-center p-4 w-full">
-      <div className="group relative w-full h-[650px] max-w-sm bg-[#161b22]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-500 hover:shadow-pink-500/20 hover:-translate-y-2 flex flex-col">
+      <div className="group relative w-full h-[650px] max-w-sm bg-[#161b22]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-500 hover:shadow-indigo-500/20 hover:-translate-y-2 flex flex-col">
 
         {/* Profile Image Section */}
         <div className="relative h-[45%] w-full shrink-0 overflow-hidden bg-gray-900">
@@ -79,8 +79,8 @@ const Usercard = ({ user }) => {
               {firstName} {lastName}
             </h2>
             <div className="flex items-center gap-2 mt-1">
-              <Briefcase size={14} className="text-pink-400" />
-              <p className="text-pink-100/90 font-medium text-sm drop-shadow-md truncate">
+              <Briefcase size={14} className="text-indigo-400" />
+              <p className="text-indigo-100/90 font-medium text-sm drop-shadow-md truncate">
                 {profession || "Developer"}
               </p>
             </div>
@@ -145,7 +145,7 @@ const Usercard = ({ user }) => {
             <button
               onClick={() => handlesendreq("interested", _id)}
               disabled={isProcessing}
-              className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white hover:scale-110 hover:shadow-[0_0_30px_rgba(236,72,153,0.5)] transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100 focus:outline-none group"
+              className="w-16 h-16 rounded-full bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-500 hover:scale-110 hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100 focus:outline-none group"
             >
               <Heart size={28} fill="currentColor" className="group-hover:scale-110 transition-transform duration-300" />
             </button>

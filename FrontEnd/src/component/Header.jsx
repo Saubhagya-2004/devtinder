@@ -30,40 +30,40 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-lg">
+    <header className="sticky top-0 z-50 bg-slate-400 backdrop-blur-md border-b border-gray-200 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link
               to={user ? "/" : "/login"}
-              className="flex items-center space-x-2 text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 transition-all duration-300"
+              className="flex items-center space-x-2 text-2xl font-bold text-white transition-all duration-300"
             >
               <span className="text-3xl">🔥</span>
-              <span className="hidden sm:inline">Tinder</span>
+              <span className="hidden sm:inline">DevTinder</span>
             </Link>
-           
+
           </div>
 
-         
+
           {user && (
             <div className="flex items-center space-x-4">
-             
-               <Link
+
+              <Link
                 to="/request"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-full transition-all duration-300 border border-transparent hover:border-pink-200"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all duration-300 border border-transparent hover:border-indigo-200"
               >
                 Requests
               </Link>
-              
+
               <Link
                 to="/connection"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-full transition-all duration-300 border border-transparent hover:border-pink-200"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all duration-300 border border-transparent hover:border-indigo-200"
               >
                 Connections
               </Link>
 
-             
+
               <div className="relative">
                 <div className="dropdown dropdown-end">
                   {/* Profile Avatar */}
@@ -76,11 +76,11 @@ const Header = () => {
                       <img
                         src={profileUrl}
                         alt="User profile"
-                        className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 group-hover:border-pink-300 transition-all duration-300"
+                        className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 group-hover:border-indigo-300 transition-all duration-300"
                       />
                       <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
                     </div>
-                    
+
                     {/* Welcome text - hidden on mobile */}
                     <div className="hidden md:block">
                       <p className="text-sm font-medium text-gray-900">
@@ -90,12 +90,12 @@ const Header = () => {
                         {user?.data?.email}
                       </p>
                     </div>
-                    
+
                     {/* Chevron */}
-                    <svg 
-                      className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors duration-300" 
-                      fill="none" 
-                      stroke="currentColor" 
+                    <svg
+                      className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors duration-300"
+                      fill="none"
+                      stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -111,7 +111,7 @@ const Header = () => {
                       <li>
                         <Link
                           to="/profile"
-                          className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-pink-50 hover:text-pink-600 rounded-lg transition-all duration-300"
+                          className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-all duration-300"
                         >
                           <span className="flex items-center space-x-3">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,19 +119,19 @@ const Header = () => {
                             </svg>
                             <span>Profile</span>
                           </span>
-                          <span className="px-2 py-1 text-xs font-medium bg-pink-100 text-pink-600 rounded-full">
+                          <span className="px-2 py-1 text-xs font-medium bg-indigo-100 text-indigo-600 rounded-full">
                             New
                           </span>
                         </Link>
                       </li>
                     )}
-                    
-                    
-                    
+
+
+
                     <li>
                       <div className="border-t border-gray-200 my-1"></div>
                     </li>
-                    
+
                     <li>
                       <a
                         onClick={handlelogout}
