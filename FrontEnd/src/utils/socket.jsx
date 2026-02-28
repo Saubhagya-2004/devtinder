@@ -1,5 +1,7 @@
-import {io} from "socket.io-client"
+import { io } from "socket.io-client"
 import { BASE_URL } from "./constant"
-export const createSocketConnection = ()=>{
-    return io (BASE_URL)
+export const createSocketConnection = () => {
+    return io(BASE_URL, {
+        withCredentials: true
+    })
 }

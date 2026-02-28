@@ -1,7 +1,7 @@
 const socket = require("socket.io");
 const crypto = require("crypto");
 const { Chat } = require("../models/Chat");
-const connectioReq= require("../models/connectionreq")
+const connectioReq = require("../models/connectionreq")
 
 const getSecretRoomId = (userId, targetuserId) => {
   return crypto
@@ -9,10 +9,18 @@ const getSecretRoomId = (userId, targetuserId) => {
     .update([userId, targetuserId].sort().join("_"))
     .digest("hex");
 };
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175",
+  "https://developertindor.netlify.app"
+];
+
 const intializesocket = (server) => {
   const io = socket(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: allowedOrigins,
+      credentials: true
     },
   });
   io.on("connection", (socket) => {
@@ -29,19 +37,19 @@ const intializesocket = (server) => {
         try {
           const roomId = getSecretRoomId(userId, targetuserId);
           console.log(firstName + " ::" + textmsg);
-        const connection= await connectioReq.find({
-          $or:[
-            {senderId:userId,ReciverId:targetuserId,status:"accepted"},
-            {senderId:targetuserId,ReciverId:userId,status:"accepted"}
-          ]
-          
-        })
-        if(connection.length==0){
-           socket.emit("messageError", {
-          error: "You are not connected with this user"
-        });
-        return;
-        }
+          const connection = await connectioReq.find({
+            $or: [
+              { senderId: userId, ReciverId: targetuserId, status: "accepted" },
+              { senderId: targetuserId, ReciverId: userId, status: "accepted" }
+            ]
+
+          })
+          if (connection.length == 0) {
+            socket.emit("messageError", {
+              error: "You are not connected with this user"
+            });
+            return;
+          }
           let chat = await Chat.findOne({
             participants: { $all: [userId, targetuserId] },
           });
@@ -51,20 +59,20 @@ const intializesocket = (server) => {
               messages: [],
             });
           }
-            chat.messages.push({
-              senderId:userId,
-              text:textmsg
-            })
-          
-            await chat.save();
-            io.to(roomId).emit("messageRecived", { firstName, textmsg });
-          } catch (err) {
-            console.log(err.message)
-          }
+          chat.messages.push({
+            senderId: userId,
+            text: textmsg
+          })
+
+          await chat.save();
+          io.to(roomId).emit("messageRecived", { firstName, textmsg });
+        } catch (err) {
+          console.log(err.message)
+        }
 
       }
     );
-    socket.on("disconnect", () => {});
+    socket.on("disconnect", () => { });
   });
 };
 module.exports = intializesocket;
