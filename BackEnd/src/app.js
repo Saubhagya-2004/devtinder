@@ -33,9 +33,25 @@ const intializesocket = require("./utils/socket");
 const chatRouter = require("./Routes/chat");
 
 // Enable CORS for all incoming requests
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175",
+  "https://developertindor.netlify.app"
+];
+
 app.use(cors({
-  origin: true, // Allow all origins for now to simplify Netlify deployment
-  credentials: true
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
 }));
 
 
