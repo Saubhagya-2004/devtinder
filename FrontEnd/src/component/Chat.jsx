@@ -158,7 +158,7 @@ const Chat = () => {
           {/* Header */}
           <div className="px-6 py-4 border-b border-white/10 bg-white/5 flex items-center justify-between sticky top-0 z-20">
             <div className="flex items-center gap-4">
-              <Link to="/connections" className="p-2 -ml-2 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white">
+              <Link to="/connection" className="p-2 -ml-2 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white">
                 <ArrowLeft size={20} />
               </Link>
               <div className="flex items-center gap-3">

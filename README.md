@@ -1,50 +1,56 @@
-# Tinder Clone - MERN Stack 🔥
+# DevTinder - MERN Stack 🔥
 
-A full-stack Tinder-like web application built with the MERN stack (MongoDB, Express.js, React, Node.js) featuring user authentication, matching system, and real-time encrypted chat.
-
+A full-stack web application built with the MERN stack (MongoDB, Express.js, React, Node.js) specifically for developers to find collaborators, make connections, and chat in real-time.
 
 ## ✨ Features
 
 - **Secure Authentication**
-  - JWT token-based login/signup
-  - Password encryption
+  - JWT token-based login/signup with OTP verification via Nodemailer
+  - Password encryption using Bcrypt
   - Protected routes
 
-- **Tinder-like Matching**
-  - Swipe left/right functionality
-  - Connection requests
-  - Matches feed page
+- **Developer Matching**
+  - Swipe left/right functionality (Interested / Ignored)
+  - Connection requests handling (Accept / Reject)
+  - Matches feed page filtered by preferences
 
 - **Real-time Chat**
-  - WebSocket implementation
-  - End-to-end encryption
+  - WebSocket implementation using Socket.io
+  - Real-time messaging with your connections
   - Online status indicators
 
 - **User Profiles**
-  - Profile creation/editing
-  - Photo uploads
-  - Preference settings
+  - Profile creation and editing
+  - Real-time Photo uploads directly to Cloudinary
+  - Skills, profession, and preference settings
 
 ## 🛠 Tech Stack
 
 **Frontend:**
-- React.js
-- Redux (state management)
-- Talwind Css
-- Axios
-- Socket.io-client
+- React.js (v19)
+- Vite (Build Tool)
+- Redux Toolkit (State Management)
+- Tailwind CSS v4 & DaisyUI (Styling & Components)
+- React Router DOM (Navigation)
+- Axios (API Requests)
+- Socket.io-client (Real-time communication)
+- React Hot Toast (Notifications)
+- Lucide React (Icons)
 
 **Backend:**
 - Node.js & Express.js
-- MongoDB (Mongoose)
-- JWT Authentication
-- Bcrypt (password hashing)
-- Socket.io
-- Crypto-js (encryption)
+- MongoDB & Mongoose (Database & ORM)
+- JWT (Authentication)
+- Bcrypt (Password Hashing)
+- Socket.io (WebSocket Server)
+- Cloudinary & Multer (Image Uploads & Storage)
+- Nodemailer (Email & OTP functionality)
+- Validator (Data Validation)
 
 ## 🚀 Installation
 
 1. Clone the repo
 ```bash
-git clone https://github.com/Saubhagya-2004/devtinder
+git clone https://github.com/Saubhagya-2004/devtinder.git
 cd devtinder
+
