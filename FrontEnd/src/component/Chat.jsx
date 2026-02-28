@@ -5,6 +5,8 @@ import { createSocketConnection } from "../utils/socket";
 import { FaCheckDouble } from "react-icons/fa6";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
+import { Send, ArrowLeft, MoreVertical, Code2 } from "lucide-react";
+import { Link } from "react-router-dom";
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [newmessage, setNewmessage] = useState("");
@@ -18,30 +20,30 @@ const Chat = () => {
 
   const userId = user?.data?._id;
   const firstName = user?.data?.firstName;
- const fetchchatmessage = async () => {
-  const chatmessage = await axios.get(BASE_URL + "/chat/" + targetuserId, {
-    withCredentials: true,
-  });
+  const fetchchatmessage = async () => {
+    const chatmessage = await axios.get(BASE_URL + "/chat/" + targetuserId, {
+      withCredentials: true,
+    });
 
-  console.log("Fetched Chat:", chatmessage.data.messages);
+    console.log("Fetched Chat:", chatmessage.data.messages);
 
-  const chatmsg = chatmessage?.data?.messages.map((msg) => {
-    const { senderId, text, createdAt } = msg;
+    const chatmsg = chatmessage?.data?.messages.map((msg) => {
+      const { senderId, text, createdAt } = msg;
 
-    return {
-      firstName: senderId?.firstName,
-      sender: senderId?.firstName,
-      text,
-      timestamp: createdAt ? new Date(createdAt).getTime() : Date.now(),
-      isOwn: senderId?._id === userId,
-    };
-  });
+      return {
+        firstName: senderId?.firstName,
+        sender: senderId?.firstName,
+        text,
+        timestamp: createdAt ? new Date(createdAt).getTime() : Date.now(),
+        isOwn: senderId?._id === userId,
+      };
+    });
 
-  setMessages(chatmsg);
-};
-  useEffect(()=>{
-fetchchatmessage();
-  },[])
+    setMessages(chatmsg);
+  };
+  useEffect(() => {
+    fetchchatmessage();
+  }, [])
 
   // Find target user name
   const targetUser = connections?.find((conn) => conn._id === targetuserId);
@@ -143,71 +145,144 @@ fetchchatmessage();
   };
 
   return (
-<div className="w-1/2 mx-auto border border-gray-300 m-5 h-[80vh] p-5 flex flex-col rounded-2xl">
-  <div className="border-b border-gray-300 pb-2 mb-2">
-    <h1 className="text-lg font-medium">Chat with {targetUserName}</h1>
-  </div>
+    <div className="min-h-screen bg-transparent p-4 md:p-8 mt-16 relative">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-  <div className="flex-1 overflow-y-auto mb-4 bg-gray-100 p-2 rounded">
-    {messages.length === 0 ? (
-      <div className="text-center text-gray-500 mt-10">
-        No messages yet. Start the conversation!
-      </div>
-    ) : (
-      messages.map((msg, index) => (
-        <div key={index} className={`mb-4 flex ${msg.isOwn ? 'justify-end' : 'justify-start'}`}>
-          <div
-            className={`max-w-[80%] px-3 py-2 rounded-lg ${
-              msg.isOwn
-                ? "bg-pink-200 text-black"
-                : "bg-green-300 text-black border"
-            }`}
-          >
-            {/* Show sender name only for received messages */}
-            {!msg.isOwn && (
-              <div className="text-xs font-medium mb-1 text-gray-700">
-                {msg.sender || targetUser?.firstName}
+      <div className="max-w-4xl mx-auto h-[82vh] flex flex-col relative z-10">
+
+        {/* Main Chat Container - Glassmorphic */}
+        <div className="flex-1 flex flex-col bg-[#0d1117]/80 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl overflow-hidden relative">
+
+          {/* Header */}
+          <div className="px-6 py-4 border-b border-white/10 bg-white/5 flex items-center justify-between sticky top-0 z-20">
+            <div className="flex items-center gap-4">
+              <Link to="/connections" className="p-2 -ml-2 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white">
+                <ArrowLeft size={20} />
+              </Link>
+              <div className="flex items-center gap-3">
+                {/* User Avatar Placeholder */}
+                <div className="relative">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-400 to-pink-500 p-[2px]">
+                    <div className="w-full h-full bg-[#0d1117] rounded-full flex items-center justify-center flex-shrink-0">
+                      {targetUser?.photoUrl ? (
+                        <img src={targetUser.photoUrl} alt="avatar" className="w-full h-full rounded-full object-cover" />
+                      ) : (
+                        <span className="text-white font-bold text-sm">
+                          {targetUserName.charAt(0)}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  {isConnected && (
+                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#0d1117] rounded-full"></span>
+                  )}
+                </div>
+                <div>
+                  <h1 className="text-lg font-semibold text-white tracking-tight leading-tight glow-text-subtle">
+                    {targetUserName}
+                  </h1>
+                  <span className="text-xs text-green-400 font-medium tracking-wide flex items-center gap-1">
+                    {isConnected ? "● Online" : <span className="text-gray-500">○ Offline</span>}
+                  </span>
+                </div>
               </div>
+            </div>
+
+            <button className="p-2 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white">
+              <MoreVertical size={20} />
+            </button>
+          </div>
+
+          {/* Messages Area */}
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+            {messages.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-center opacity-50 animate-pulse">
+                <Code2 size={48} className="text-white mb-4 opacity-50" />
+                <p className="text-xl font-medium text-white mb-2">Start Collaborating</p>
+                <p className="text-sm text-gray-400 max-w-sm">Say hello and start planning your next big feature with {targetUserName}.</p>
+              </div>
+            ) : (
+              messages.map((msg, index) => {
+                const isLatestOwn = msg.isOwn && index === messages.length - 1;
+                return (
+                  <div
+                    key={index}
+                    className={`flex ${msg.isOwn ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}
+                  >
+                    {!msg.isOwn && (
+                      // Optional: small avatar next to received messages
+                      <div className="w-8 h-8 rounded-full bg-white/10 flex-shrink-0 mr-3 mt-auto mb-1 flex items-center justify-center border border-white/5">
+                        {targetUser?.photoUrl ? (
+                          <img src={targetUser.photoUrl} className="w-full h-full rounded-full object-cover opacity-80" alt="" />
+                        ) : (
+                          <span className="text-xs font-bold text-white/50">{msg.sender?.charAt(0) || targetUserName.charAt(0)}</span>
+                        )}
+                      </div>
+                    )}
+
+                    <div className="max-w-[75%] md:max-w-[65%] flex flex-col group">
+                      {/* Name for received msgs in group chats, hidden in 1-on-1 but kept for structure */}
+                      {!msg.isOwn && (
+                        <span className="text-xs text-gray-400 ml-1 mb-1 font-medium">{msg.sender || targetUser?.firstName}</span>
+                      )}
+
+                      <div
+                        className={`px-4 py-3 relative ${msg.isOwn
+                          ? "bg-gradient-to-br from-orange-500 to-pink-500 text-white rounded-2xl rounded-tr-sm shadow-[0_4px_15px_rgba(249,115,22,0.2)]"
+                          : "bg-white/10 backdrop-blur-md border border-white/10 text-gray-100 rounded-2xl rounded-tl-sm hover:bg-white-[0.15] transition-colors"
+                          }`}
+                      >
+                        <p className="text-sm md:text-base leading-relaxed break-words whitespace-pre-wrap">{msg.text}</p>
+                      </div>
+
+                      {/* Time & Status */}
+                      <div className={`flex items-center gap-1 mt-1 text-[11px] ${msg.isOwn ? 'justify-end text-orange-200/70 mr-1' : 'justify-start text-gray-500 ml-1'} opacity-0 group-hover:opacity-100 transition-opacity duration-200`}>
+                        <time>{formatTime(msg.timestamp)}</time>
+                        {msg.isOwn && (
+                          <FaCheckDouble className={isLatestOwn ? "text-orange-400" : "text-white/40"} size={10} />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
             )}
+            <div ref={messagesEndRef} className="h-4" /> {/* Extra padding at bottom */}
+          </div>
 
-            <div className="text-sm break-words">{msg.text}</div>
-
-            <div className="flex justify-end items-end mt-1">
-              <time className="text-xs opacity-100">
-                {formatTime(msg.timestamp)}
-              </time>
-              {msg.isOwn && (
-                <span className="text-xs text-black opacity-50 ml-1">
-                  • seen
-                </span>
-              )}
+          {/* Input Area */}
+          <div className="p-4 md:p-5 bg-white/5 border-t border-white/10 backdrop-blur-xl">
+            <div className="flex items-end gap-3 max-w-5xl mx-auto align-middle relative">
+              <textarea
+                value={newmessage}
+                onChange={(e) => setNewmessage(e.target.value)}
+                onKeyDown={handleKeyPress}
+                placeholder={isConnected ? "Write a message..." : "Connecting..."}
+                disabled={!isConnected}
+                rows={1}
+                className="flex-1 max-h-32 min-h-[52px] resize-none bg-[#0d1117]/80 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50 transition-all scrollbar-thin shadow-inner"
+              />
+              <button
+                onClick={sendMessage}
+                disabled={!newmessage.trim() || !isConnected}
+                className={`flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${newmessage.trim() && isConnected
+                  ? "bg-gradient-to-br from-orange-500 to-pink-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:scale-105 hover:shadow-[0_0_25px_rgba(249,115,22,0.5)] active:scale-95 cursor-pointer"
+                  : "bg-white/5 text-gray-500 border border-white/10 cursor-not-allowed"
+                  }`}
+              >
+                <Send size={20} className={newmessage.trim() && isConnected ? "ml-1" : ""} />
+              </button>
+            </div>
+            {/* Tiny helper text */}
+            <div className="text-center mt-2 hidden md:block">
+              <span className="text-[10px] text-gray-500">Press <kbd className="font-mono bg-white/10 px-1 rounded">Enter</kbd> to send, <kbd className="font-mono bg-white/10 px-1 rounded">Shift + Enter</kbd> for new line.</span>
             </div>
           </div>
         </div>
-      ))
-    )}
-    <div ref={messagesEndRef} />
-  </div>
-
-  <div className="flex gap-2">
-    <input
-      value={newmessage}
-      onChange={(e) => setNewmessage(e.target.value)}
-      onKeyPress={handleKeyPress}
-      type="text"
-      className="flex-1 border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-      placeholder="Type a message..."
-      disabled={!isConnected}
-    />
-    <button
-      onClick={sendMessage}
-      disabled={!newmessage.trim() || !isConnected}
-      className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 disabled:bg-gray-400"
-    >
-      Send
-    </button>
-  </div>
-</div>
+      </div>
+    </div>
   );
 };
 
