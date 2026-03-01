@@ -79,7 +79,8 @@ const sendEmail = require('../utils/sendEmail');
 exports.forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
-        const user = await User.findOne({ email });
+        // Case-insensitive email search to handle any capitalization
+        const user = await User.findOne({ email: { $regex: new RegExp(`^${email.trim()}$`, 'i') } });
 
         if (!user) {
             return res.status(404).json({ message: "There is no user with that email address." });
@@ -104,7 +105,6 @@ exports.forgotPassword = async (req, res) => {
         } catch (err) {
             console.error("Email Sending Error:", err.message);
             // Always fall back to showing OTP in response when email fails
-            // (no SMTP configured in production — OTP is shown on screen)
             return res.status(200).json({
                 message: "Your OTP is: " + otp + " (valid for 10 minutes)"
             });
@@ -113,6 +113,54 @@ exports.forgotPassword = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
+
+exports.verifyOtp = async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+        // Case-insensitive email lookup
+        const user = await User.findOne({
+            email: { $regex: new RegExp(`^${email.trim()}$`, 'i') },
+            resetPasswordOtp: otp,
+            resetPasswordExpires: { $gt: Date.now() },
+        });
+
+        if (!user) {
+            return res.status(400).json({ message: "OTP is invalid or has expired." });
+        }
+
+        res.status(200).json({ message: "OTP verified successfully." });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
+exports.resetPassword = async (req, res) => {
+    try {
+        const { email, otp, password } = req.body;
+        // Case-insensitive email lookup
+        const user = await User.findOne({
+            email: { $regex: new RegExp(`^${email.trim()}$`, 'i') },
+            resetPasswordOtp: otp,
+            resetPasswordExpires: { $gt: Date.now() },
+        });
+
+        if (!user) {
+            return res.status(400).json({ message: "OTP is invalid or has expired." });
+        }
+
+        // Hash new password
+        const passwordhash = await bcrypt.hash(password, 10);
+        user.password = passwordhash;
+        user.resetPasswordOtp = undefined;
+        user.resetPasswordExpires = undefined;
+        await user.save();
+
+        res.status(200).json({ message: "Password reset successfully! You can now login." });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
 
 exports.verifyOtp = async (req, res) => {
     try {
