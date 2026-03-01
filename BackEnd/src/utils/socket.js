@@ -9,18 +9,11 @@ const getSecretRoomId = (userId, targetuserId) => {
     .update([userId, targetuserId].sort().join("_"))
     .digest("hex");
 };
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://localhost:5175",
-  "https://developertindor.netlify.app"
-];
-
 const intializesocket = (server) => {
   const io = socket(server, {
     cors: {
-      origin: allowedOrigins,
-      credentials: true
+      origin: "*",
+      methods: ["GET", "POST"],
     },
   });
   io.on("connection", (socket) => {

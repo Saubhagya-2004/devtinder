@@ -52,6 +52,7 @@ exports.login = async (req, res) => {
 
             res.json({
                 data: user,
+                token,               // ← returned for React Native mobile
                 message: "login sucessFully !!",
             });
         } else {
