@@ -159,7 +159,7 @@ export default function SignupScreen() {
                                 <Ionicons name="lock-closed-outline" size={16} color="#a78bfa" />
                                 <TextInput
                                     className="flex-1 text-white py-3.5 px-2"
-                                    placeholder="Min 8 chars, uppercase, number, symbol"
+                                    placeholder="e.g. MyPass@123"
                                     placeholderTextColor="#4b5563"
                                     secureTextEntry={!showPassword}
                                     value={form.password}
@@ -173,6 +173,9 @@ export default function SignupScreen() {
                                     />
                                 </TouchableOpacity>
                             </View>
+                            <Text className="text-gray-500 text-xs mt-1 ml-1">
+                                Min 8 chars · Uppercase · Number · Symbol (e.g. Test@1234)
+                            </Text>
                         </View>
 
                         {/* Age & Gender Row */}
@@ -197,8 +200,8 @@ export default function SignupScreen() {
                                             key={g}
                                             onPress={() => update("gender", g)}
                                             className={`flex-1 py-3.5 rounded-xl items-center border ${form.gender === g
-                                                    ? "bg-purple-600 border-purple-600"
-                                                    : "bg-white/10 border-white/10"
+                                                ? "bg-purple-600 border-purple-600"
+                                                : "bg-white/10 border-white/10"
                                                 }`}
                                         >
                                             <Text
