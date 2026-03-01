@@ -73,7 +73,7 @@ export default function LoginScreen() {
                     {/* Form Card */}
                     <View className="mx-6 bg-white/5 rounded-3xl p-6 border border-white/10">
                         <Text className="text-white text-2xl font-bold mb-6">
-                            Welcome back 👋
+                            Welcome back
                         </Text>
 
                         {/* Email */}
