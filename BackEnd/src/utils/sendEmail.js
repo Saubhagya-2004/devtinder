@@ -3,12 +3,6 @@ const nodemailer = require('nodemailer');
 const sendEmail = async (options) => {
     // If no SMTP credentials are provided, log the email to the console (Development Mode)
     if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
-        console.log("\n==========================================================");
-        console.log("🚧 MOCK EMAIL PREVIEW (Missing SMTP_EMAIL or SMTP_PASSWORD in .env)");
-        console.log(`To: ${options.email}`);
-        console.log(`Subject: ${options.subject}`);
-        console.log(`Message: \n${options.message}`);
-        console.log("==========================================================\n");
         throw new Error("Missing SMTP credentials in .env"); // Trigger catch block in controller
     }
 
