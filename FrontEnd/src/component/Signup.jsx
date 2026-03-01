@@ -33,11 +33,31 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Explicit client-side validation for age
+    if (!formData.age || parseInt(formData.age) < 18 || parseInt(formData.age) > 100) {
+      toast.error("Age must be between 18 and 100");
+      return;
+    }
+
     setIsSubmitting(true);
     const toastId = toast.loading("Creating your account...");
 
     try {
-      const res = await axios.post(`${BASE_URL}/signup`, formData, {
+      // Prepare payload to match backend schema exactly (e.g., removing empty optional strings, parsing age)
+      const payload = {
+        ...formData,
+        age: parseInt(formData.age, 10),
+      };
+
+      // Strip empty optional fields before sending so backend doesn't throw validation errors
+      Object.keys(payload).forEach(key => {
+        if (payload[key] === "" && key !== "email" && key !== "password" && key !== "firstName" && key !== "lastName" && key !== "gender") {
+          delete payload[key];
+        }
+      });
+
+      const res = await axios.post(`${BASE_URL}/signup`, payload, {
         withCredentials: true,
       });
 
@@ -47,7 +67,7 @@ const Signup = () => {
         navigate("/login");
       }, 2000);
     } catch (err) {
-      toast.error(err?.response?.data || "Something went wrong creating your account", { id: toastId });
+      toast.error(err?.response?.data?.message || err?.response?.data || "Something went wrong creating your account", { id: toastId });
     } finally {
       setIsSubmitting(false);
     }
