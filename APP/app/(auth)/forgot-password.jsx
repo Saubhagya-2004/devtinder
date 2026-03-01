@@ -21,6 +21,7 @@ export default function ForgotPasswordScreen() {
     const [step, setStep] = useState(1);
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
+    const [otpHint, setOtpHint] = useState(""); // stores OTP from server response (dev mode)
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -37,12 +38,15 @@ export default function ForgotPasswordScreen() {
             const res = await axiosInstance.post("/forgot-password", {
                 email: email.trim().toLowerCase(),
             });
-            Alert.alert("OTP Sent", res.data.message);
+            const msg = res.data.message || "";
+            // Backend returns OTP in the message when SMTP not configured
+            // e.g. "Dev Mode Active: Your OTP is 123456"
+            setOtpHint(msg);
             setStep(2);
         } catch (err) {
             Alert.alert(
                 "Error",
-                err.response?.data?.message || "Failed to send OTP."
+                err.response?.data?.message || "Failed to send OTP. Check your email address."
             );
         } finally {
             setLoading(false);
@@ -209,6 +213,22 @@ export default function ForgotPasswordScreen() {
                         {/* Step 2 */}
                         {step === 2 && (
                             <>
+                                {/* Server OTP hint box (Dev mode / no SMTP) */}
+                                {otpHint ? (
+                                    <View className="bg-amber-500/15 border border-amber-500/40 rounded-xl p-3 mb-4">
+                                        <View className="flex-row items-center gap-2 mb-1">
+                                            <Ionicons name="information-circle" size={16} color="#f59e0b" />
+                                            <Text className="text-amber-400 text-xs font-semibold">Server Message</Text>
+                                        </View>
+                                        <Text className="text-amber-300 text-sm">{otpHint}</Text>
+                                    </View>
+                                ) : (
+                                    <View className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-3 mb-4">
+                                        <Text className="text-blue-300 text-xs">
+                                            📧 Check your email for the OTP (or check the server response above if no email came)
+                                        </Text>
+                                    </View>
+                                )}
                                 <Text className="text-purple-300 text-sm mb-2 font-medium">
                                     6-Digit OTP
                                 </Text>

@@ -30,11 +30,19 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         const res = await axiosInstance.post("/login", { email, password });
-        // Backend returns { data: user, token, message }
-        const { data: userData, token: authToken } = res.data;
+        const responseData = res.data;
+
+        // Backend returns: { data: user, token: "...", message: "..." }
+        const userData = responseData.data;
+        const authToken = responseData.token;
+
         if (!authToken) {
-            throw new Error("Authentication failed. Please try again.");
+            // Backend not yet updated — give clear instructions
+            throw new Error(
+                "Server not updated yet.\n\nPlease ask your developer to push the latest backend code to Render and redeploy."
+            );
         }
+
         await AsyncStorage.setItem("token", authToken);
         await AsyncStorage.setItem("user", JSON.stringify(userData));
         setToken(authToken);

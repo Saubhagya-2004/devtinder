@@ -15,13 +15,11 @@ import { useAuth } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const GENDER_OPTIONS = ["Male", "Female", "Others"];
 
 export default function SignupScreen() {
     const router = useRouter();
-    const { login } = useAuth();
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
@@ -37,7 +35,7 @@ export default function SignupScreen() {
 
     const handleSignup = async () => {
         const { firstName, lastName, email, password, age, gender } = form;
-        if (!firstName || !lastName || !email || !password || !age) {
+        if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !age.trim()) {
             Alert.alert("Error", "Please fill in all required fields.");
             return;
         }
@@ -55,14 +53,23 @@ export default function SignupScreen() {
                 age: parseInt(age),
                 gender,
             });
-            // Auto-login after signup
-            await login(email.trim().toLowerCase(), password);
-            router.replace("/(tabs)/feed");
-        } catch (err) {
+            // Navigate to login after success — auto-login requires backend redeploy
             Alert.alert(
-                "Signup Failed",
-                err.response?.data?.message || err.message || "Something went wrong."
+                "Account Created! 🎉",
+                "Your account is ready. Please log in with your credentials.",
+                [{ text: "Go to Login", onPress: () => router.replace("/(auth)/login") }]
             );
+        } catch (err) {
+            const msg = err.response?.data?.message || err.message || "Signup failed.";
+            // If it's a duplicate key error but user wasn't shown before, guide them
+            if (msg.includes("duplicate") || msg.includes("E11000")) {
+                Alert.alert("Already Registered", "This email already exists. Please log in instead.", [
+                    { text: "Login", onPress: () => router.replace("/(auth)/login") },
+                    { text: "Cancel", style: "cancel" },
+                ]);
+            } else {
+                Alert.alert("Signup Failed", msg);
+            }
         } finally {
             setLoading(false);
         }
@@ -95,7 +102,7 @@ export default function SignupScreen() {
                     {/* Header */}
                     <View className="px-6 mb-6">
                         <Text className="text-white text-3xl font-bold">
-                            Join DevTinder 
+                            Join DevTinder
                         </Text>
                         <Text className="text-gray-400 mt-1">
                             Connect with top developers
