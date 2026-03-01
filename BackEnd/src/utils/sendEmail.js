@@ -12,13 +12,16 @@ const sendEmail = async (options) => {
         throw new Error("Missing SMTP credentials in .env"); // Trigger catch block in controller
     }
 
-    // Create a transporter
+    // Create a transporter with strict timeouts
     const transporter = nodemailer.createTransport({
         service: 'Gmail', // or use host and port for other services
         auth: {
             user: process.env.SMTP_EMAIL,
             pass: process.env.SMTP_PASSWORD,
         },
+        connectionTimeout: 5000, // Wait maximum 5 seconds to connect
+        socketTimeout: 5000,     // Wait maximum 5 seconds for network activity
+        greetingTimeout: 5000    // Wait maximum 5 seconds for greeting
     });
 
     // Define the email options
