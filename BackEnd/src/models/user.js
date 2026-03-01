@@ -19,16 +19,11 @@ const UserScema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      // mongoose will convert the email to lowercase before saving it to the database
-      // lowercase: true,
-      //reduce space
+      lowercase: true,
       trim: true,
       validate(value) {
         if (!validator.isEmail(value)) {
-          throw new Error("Invalid email " + value);
-        }
-        if (!validator.isLowercase(value)) {
-          throw new Error("Email must be lowercase");
+          throw new Error("Invalid email address");
         }
       },
     },
@@ -37,7 +32,7 @@ const UserScema = new mongoose.Schema(
       required: true,
       validate(value) {
         if (!validator.isStrongPassword(value)) {
-          throw new Error("Not a strong password" + value);
+          throw new Error("Password must be at least 8 characters with uppercase, number and symbol (e.g. Test@1234)");
         }
       },
     },
