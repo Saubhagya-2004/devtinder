@@ -100,21 +100,14 @@ exports.forgotPassword = async (req, res) => {
                 subject: 'Password Reset OTP',
                 message,
             });
-            res.status(200).json({ message: "OTP sent to email!" });
+            res.status(200).json({ message: "OTP sent to email! Check your inbox." });
         } catch (err) {
-            console.error("Email Sending Error:", err);
-
-            // If it failed because of missing credentials or authentication error:
-            if (!process.env.SMTP_EMAIL || err.message.includes('auth') || err.message.includes('credentials') || err.message.includes('connect')) {
-                return res.status(200).json({
-                    message: "Dev Mode Active: Your OTP is " + otp
-                });
-            }
-
-            user.resetPasswordOtp = undefined;
-            user.resetPasswordExpires = undefined;
-            await user.save();
-            return res.status(500).json({ message: err.message || "There was an error sending the email." });
+            console.error("Email Sending Error:", err.message);
+            // Always fall back to showing OTP in response when email fails
+            // (no SMTP configured in production — OTP is shown on screen)
+            return res.status(200).json({
+                message: "Your OTP is: " + otp + " (valid for 10 minutes)"
+            });
         }
     } catch (err) {
         res.status(400).json({ message: err.message });
