@@ -3,6 +3,16 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const sendEmail = require('../utils/sendEmail');
 
+const getTokenCookieOptions = (req) => {
+    const isLocalBackend = ["localhost", "127.0.0.1", "::1"].includes(req.hostname);
+
+    return {
+        httpOnly: true,
+        secure: !isLocalBackend,
+        sameSite: isLocalBackend ? "lax" : "none"
+    };
+};
+
 exports.signup = async (req, res) => {
     try {
         validation(req);
@@ -31,13 +41,11 @@ exports.login = async (req, res) => {
         if (!ispasswordvalid) throw new Error("invalid credentials ");
 
         const token = await user.getjwt();
-        const expiretoken = new Date(Date.now() + 8 * 3600000);
+        const expiretoken = new Date(Date.now() + 7 * 24 * 3600000);
         await User.findByIdAndUpdate(user._id, { activeToken: token, expiretoken });
 
         res.cookie("token", token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "none",
+            ...getTokenCookieOptions(req),
             expires: expiretoken
         });
 
@@ -53,10 +61,8 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
     res.cookie('token', null, {
+        ...getTokenCookieOptions(req),
         expires: new Date(Date.now()),
-        httpOnly: true,
-        secure: true,
-        sameSite: "none"
     });
     const user = req.user;
     res.json({ message: user.firstName + " logout successfully" });
