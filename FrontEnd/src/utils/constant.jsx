@@ -1,2 +1,2 @@
 export const BASE_URL =
-  import.meta.env.VITE_BASE_URL || "https://devtinder-ltnl.onrender.com";
+  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://devtinder-ltnl.onrender.com";
